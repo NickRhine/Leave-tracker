@@ -1,25 +1,30 @@
-/*
-	Eventually by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-*/
-
 (function() {
 
-	"use strict";
+	"use strict"; //strict js to jelp reduce accidental errors like undeclared variables
 
-	var	$body = document.querySelector('body');
+	var	$body = document.querySelector('body'); //selects body tag from html
 
-	// Methods/polyfills.
+	// Methods/polyfills. These make sure that the methods used are supported by older browsers
 
 		// classList | (c) @remy | github.com/remy/polyfills | rem.mit-license.org
 			!function(){function t(t){this.el=t;for(var n=t.className.replace(/^\s+|\s+$/g,"").split(/\s+/),i=0;i<n.length;i++)e.call(this,n[i])}function n(t,n,i){Object.defineProperty?Object.defineProperty(t,n,{get:i}):t.__defineGetter__(n,i)}if(!("undefined"==typeof window.Element||"classList"in document.documentElement)){var i=Array.prototype,e=i.push,s=i.splice,o=i.join;t.prototype={add:function(t){this.contains(t)||(e.call(this,t),this.el.className=this.toString())},contains:function(t){return-1!=this.el.className.indexOf(t)},item:function(t){return this[t]||null},remove:function(t){if(this.contains(t)){for(var n=0;n<this.length&&this[n]!=t;n++);s.call(this,n,1),this.el.className=this.toString()}},toString:function(){return o.call(this," ")},toggle:function(t){return this.contains(t)?this.remove(t):this.add(t),this.contains(t)}},window.DOMTokenList=t,n(Element.prototype,"classList",function(){return new t(this)})}}();
 
 		// canUse
-			window.canUse=function(p){if(!window._canUse)window._canUse=document.createElement("div");var e=window._canUse.style,up=p.charAt(0).toUpperCase()+p.slice(1);return p in e||"Moz"+up in e||"Webkit"+up in e||"O"+up in e||"ms"+up in e};
+			window.canUse=function(p){
+				if(!window._canUse)
+					window._canUse=document.createElement("div");
+				var e=window._canUse.style,up=p.charAt(0).toUpperCase()+p.slice(1);
+				return p in e||"Moz"+up in e||"Webkit"+up in e||"O"+up in e||"ms"+up in e
+			};
 
 		// window.addEventListener
-			(function(){if("addEventListener"in window)return;window.addEventListener=function(type,f){window.attachEvent("on"+type,f)}})();
+			(function(){
+				if("addEventListener"in window)
+					return;
+				window.addEventListener=function(type,f){
+					window.attachEvent("on"+type,f);
+				}
+			})();
 
 	// Play initial animations on page load.
 		window.addEventListener('load', function() {
@@ -30,8 +35,7 @@
 
 	// Slideshow Background.
 		(function() {
-
-			// Settings.
+			// Settings. Every 6 seconds the background image changes
 				var settings = {
 
 					// Images (in the format of 'url': 'alignment').
@@ -46,6 +50,7 @@
 
 				};
 
+			// Creates div container for the background and inserts into body
 			// Vars.
 				var	pos = 0, lastPos = 0,
 					$wrapper, $bgs = [], $bg,
@@ -56,6 +61,7 @@
 					$wrapper.id = 'bg';
 					$body.appendChild($wrapper);
 
+				// Loops through the images and creates divs for each image and stores them in an array
 				for (k in settings.images) {
 
 					// Create BG.
@@ -74,8 +80,7 @@
 				$bgs[pos].classList.add('top');
 
 				// Bail if we only have a single BG or the client doesn't support transitions.
-					if ($bgs.length == 1
-					||	!canUse('transition'))
+					if ($bgs.length == 1 ||	!canUse('transition'))
 						return;
 
 				window.setInterval(function() {
@@ -101,13 +106,13 @@
 
 		})();
 
-	// Signup Form.
+	// login Form.
 		(function() {
 
 			// Vars.
-				var $form = document.querySelectorAll('#signup-form')[0],
-					$submit = document.querySelectorAll('#signup-form input[type="submit"]')[0],
-					$message;
+				var $form = document.querySelectorAll('#login-form')[0],
+					$submit = document.querySelectorAll('#login-form input[type="submit"]')[0],
+					$message
 
 			// Bail if addEventListener isn't supported.
 				if (!('addEventListener' in $form))
@@ -124,7 +129,7 @@
 					$message.classList.add(type);
 					$message.classList.add('visible');
 
-					window.setTimeout(function() {
+					setTimeout(function() {
 						$message._hide();
 					}, 3000);
 
@@ -138,34 +143,68 @@
 			// Note: If you're *not* using AJAX, get rid of this event listener.
 				$form.addEventListener('submit', function(event) {
 
-					event.stopPropagation();
+					// event.stopPropagation();
 					event.preventDefault();
 
 					// Hide message.
 						$message._hide();
 
-					// Disable submit.
+
+
+						var email = document.querySelector('#email').value.trim();
+						var password = document.querySelector('#password').value.trim();
+
+						document.querySelector('#email').classList.remove('input-error');
+						document.querySelector('#password').classList.remove('input-error');
+
+						if(password === ''){
+							document.querySelector('#password').classList.add('input-error');
+							$message._show('failure', 'Password cannot be empty');
+							$submit.disabled = false;
+							return;
+						}
+
+						if(email === '' || !email.includes('@')){
+							document.querySelector('#email').classList.add('input-error');
+							$message._show('failure', 'Please enter a valid email');
+							$submit.disabled = false;
+							return;
+						}
+						// Disable submit.
 						$submit.disabled = true;
 
 					// Process form.
 					// Note: Doesn't actually do anything yet (other than report back with a "thank you"),
 					// but there's enough here to piece together a working AJAX submission call that does.
-						window.setTimeout(function() {
+						setTimeout(function() {
 
 							// Reset form.
 								$form.reset();
 
 							// Enable submit.
 								$submit.disabled = false;
+								$message.classList.remove('failure');
 
 							// Show message.
-								$message._show('success', 'Thank you!');
-								//$message._show('failure', 'Something went wrong. Please try again.');
+							$message._show = function(type, text) {
+									
+								$message.innerHTML = text;
+								$message.classList.add(type);
+								$message.classList.add('visible');
+		
+								setTimeout(function() {
+									$message._hide();
+								}, 3000);
+		
+							}
+								$message._show('success', 'Login Successful!');
 
 						}, 750);
 
 				});
 
 		})();
+
+
 
 })();

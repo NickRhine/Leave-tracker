@@ -1,10 +1,7 @@
 @import url(fontawesome-all.min.css);
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,700");
-/*
-	Eventually by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-*/
+
+
 html, body, div, span, applet, object,
 iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
 pre, a, abbr, acronym, address, big, cite,
@@ -60,6 +57,7 @@ input, select, textarea {
   -ms-appearance: none;
   appearance: none; }
 
+
 /* Basic */
 @-ms-viewport {
   width: device-width; }
@@ -85,6 +83,7 @@ html, body {
     html, body {
       height: auto;
       min-height: 100%; } }
+
 
 body {
   display: -moz-flex;
@@ -798,34 +797,38 @@ button,
   #header {
     margin: 0 0 1em 0; } }
 
-/* Signup Form */
-#signup-form {
+/* login Form */
+#login-form {
   display: -moz-flex;
   display: -webkit-flex;
   display: -ms-flex;
   display: flex;
-  position: relative; }
-  #signup-form input[type="text"],
-  #signup-form input[type="password"],
-  #signup-form input[type="email"] {
-    width: 18em; }
-  #signup-form > * {
-    margin: 0 0 0 1em; }
-  #signup-form > :first-child {
-    margin: 0 0 0 0; }
-  @media screen and (max-width: 480px) {
-    #signup-form {
+  position: relative; } /*default characteristics of the login form class and children */
+
+  #login-form input[type="text"],
+  #login-form input[type="password"],
+  #login-form input[type="email"] {
+    width: 18em; } /*Inputs given fixed length*/
+
+  #login-form > * {
+    margin: 0 0 0 1em; }/*spacing between elements*/
+
+  #login-form > :first-child {
+    margin: 0 0 0 0; } /*Removes left margin from first child for alignment*/
+
+  @media screen and (max-width: 480px) { /*Class characteristics for when screen width is smaller than 480px so mobile devices*/
+    #login-form {
       -moz-flex-direction: column;
       -webkit-flex-direction: column;
       -ms-flex-direction: column;
       flex-direction: column; }
-      #signup-form input[type="type"],
-      #signup-form input[type="password"],
-      #signup-form input[type="email"] {
+      #login-form input[type="text"], /*type orignally*/
+      #login-form input[type="password"],
+      #login-form input[type="email"] {
         width: 100%; }
-      #signup-form > * {
+      #login-form > * {
         margin: 1.25em 0 0 0; }
-      #signup-form .message {
+      #login-form .message {
         bottom: -1.5em;
         font-size: 0.9em;
         height: 1em;
@@ -885,3 +888,14 @@ button,
       left: auto;
       margin: 1em 0 0 0;
       position: relative; } }
+
+/* New code added not from template */
+.error-message{
+  display: none;
+  color: red;
+  font-size: 14px;
+}
+
+.input-error{
+  border: 1px solid red !important;
+}
