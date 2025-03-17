@@ -1,87 +1,18 @@
-@import url(fontawesome-all.min.css);
+@import 'fontawesome-all.min.css';
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,700");
-
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
+/*This file is the master file that organizes and imports all the componenets in the css architecture before being compiled in
+main.css. It provides a modular way of coding to allow the website to be compatible across browsers and platforms. */
+html, body, div, span, applet, object,
+iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
+pre, a, abbr, acronym, address, big, cite,
+code, del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var, b,
+u, i, center, dl, dt, dd, ol, ul, li, fieldset,
+form, label, legend, table, caption, tbody,
+tfoot, thead, tr, th, td, article, aside,
+canvas, details, embed, figure, figcaption,
+footer, header, hgroup, menu, nav, output, ruby,
+section, summary, time, mark, audio, video {
   margin: 0;
   padding: 0;
   border: 0;
@@ -90,17 +21,8 @@ video {
   vertical-align: baseline;
 }
 
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
   display: block;
 }
 
@@ -108,19 +30,14 @@ body {
   line-height: 1;
 }
 
-ol,
-ul {
+ol, ul {
   list-style: none;
 }
 
-blockquote,
-q {
+blockquote, q {
   quotes: none;
 }
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
+blockquote:before, blockquote:after, q:before, q:after {
   content: "";
   content: none;
 }
@@ -144,9 +61,7 @@ input::-moz-focus-inner {
   padding: 0;
 }
 
-input,
-select,
-textarea {
+input, select, textarea {
   -moz-appearance: none;
   -webkit-appearance: none;
   -ms-appearance: none;
@@ -157,7 +72,6 @@ textarea {
 @-ms-viewport {
   width: device-width;
 }
-
 body {
   -ms-overflow-style: scrollbar;
 }
@@ -168,7 +82,6 @@ body {
     min-width: 320px;
   }
 }
-
 html {
   box-sizing: border-box;
 }
@@ -238,6 +151,40 @@ body > * {
   body {
     padding: 5em 1.25em 1.25em 1.25em;
   }
+}
+
+#calendar-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 500px;
+  height: 500px;
+  z-index: 10;
+  border: 1px solid #ddd;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.box-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.box1 {
+  height: 130px;
+  width: 230px;
+  border-radius: 20px;
+  box-shadow: 3px 3px 10px rgba(0, 30, 87, 0.751);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
 }
 
 /* BG */
@@ -320,7 +267,6 @@ body.is-preload #bg {
     transform: translateX(-25%);
   }
 }
-
 @-webkit-keyframes bg {
   0% {
     -moz-transform: translateX(0);
@@ -335,7 +281,6 @@ body.is-preload #bg {
     transform: translateX(-25%);
   }
 }
-
 @-ms-keyframes bg {
   0% {
     -moz-transform: translateX(0);
@@ -350,7 +295,6 @@ body.is-preload #bg {
     transform: translateX(-25%);
   }
 }
-
 @keyframes bg {
   0% {
     -moz-transform: translateX(0);
@@ -365,12 +309,8 @@ body.is-preload #bg {
     transform: translateX(-25%);
   }
 }
-
 /* Type */
-body,
-input,
-select,
-textarea {
+body, input, select, textarea {
   color: rgba(255, 255, 255, 0.75);
   font-family: "Roboto", sans-serif;
   font-size: 16pt;
@@ -379,42 +319,27 @@ textarea {
   line-height: 1.65em;
 }
 @media screen and (max-width: 1680px) {
-  body,
-  input,
-  select,
-  textarea {
+  body, input, select, textarea {
     font-size: 12pt;
   }
 }
 @media screen and (max-width: 1280px) {
-  body,
-  input,
-  select,
-  textarea {
+  body, input, select, textarea {
     font-size: 11pt;
   }
 }
 @media screen and (max-width: 980px) {
-  body,
-  input,
-  select,
-  textarea {
+  body, input, select, textarea {
     font-size: 12pt;
   }
 }
 @media screen and (max-width: 736px) {
-  body,
-  input,
-  select,
-  textarea {
+  body, input, select, textarea {
     font-size: 12pt;
   }
 }
 @media screen and (max-width: 480px) {
-  body,
-  input,
-  select,
-  textarea {
+  body, input, select, textarea {
     font-size: 12pt;
   }
 }
@@ -434,14 +359,12 @@ a:hover {
   text-decoration: none;
 }
 
-strong,
-b {
+strong, b {
   color: #fff;
   font-weight: 700;
 }
 
-em,
-i {
+em, i {
   font-style: italic;
 }
 
@@ -449,23 +372,13 @@ p {
   margin: 0 0 2em 0;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   color: #fff;
   font-weight: 700;
   line-height: 1em;
   margin: 0 0 1em 0;
 }
-h1 a,
-h2 a,
-h3 a,
-h4 a,
-h5 a,
-h6 a {
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
   color: inherit;
   text-decoration: none;
 }
@@ -552,8 +465,7 @@ hr.major {
 }
 
 /* Section/Article */
-section.special,
-article.special {
+section.special, article.special {
   text-align: center;
 }
 
@@ -562,19 +474,16 @@ header p {
   position: relative;
   margin: 0 0 1.5em 0;
 }
-
 header h2 + p {
   font-size: 1.25em;
   margin-top: -1em;
   line-height: 1.5em;
 }
-
 header h3 + p {
   font-size: 1.1em;
   margin-top: -0.8em;
   line-height: 1.5em;
 }
-
 header h4 + p,
 header h5 + p,
 header h6 + p {
@@ -582,19 +491,16 @@ header h6 + p {
   margin-top: -0.6em;
   line-height: 1.5em;
 }
-
 @media screen and (max-width: 980px) {
   header br {
     display: none;
   }
 }
-
 @media screen and (max-width: 736px) {
   header br {
     display: inline;
   }
 }
-
 @media screen and (max-width: 480px) {
   header br {
     display: none;
@@ -678,8 +584,7 @@ form {
 form .message {
   text-decoration: none;
   -moz-transition: opacity 0.2s ease-in-out, -moz-transform 0.2s ease-in-out;
-  -webkit-transition: opacity 0.2s ease-in-out,
-    -webkit-transform 0.2s ease-in-out;
+  -webkit-transition: opacity 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
   -ms-transition: opacity 0.2s ease-in-out, -ms-transform 0.2s ease-in-out;
   transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
   -moz-transform: scale(1.05);
@@ -753,7 +658,6 @@ label {
     transform: scale(1);
   }
 }
-
 @-webkit-keyframes focus {
   0% {
     -moz-transform: scale(1);
@@ -774,7 +678,6 @@ label {
     transform: scale(1);
   }
 }
-
 @-ms-keyframes focus {
   0% {
     -moz-transform: scale(1);
@@ -795,7 +698,6 @@ label {
     transform: scale(1);
   }
 }
-
 @keyframes focus {
   0% {
     -moz-transform: scale(1);
@@ -816,10 +718,9 @@ label {
     transform: scale(1);
   }
 }
-
-input[type="text"],
-input[type="password"],
-input[type="email"],
+input[type=text],
+input[type=password],
+input[type=email],
 select,
 textarea {
   -moz-appearance: none;
@@ -845,16 +746,16 @@ textarea {
   text-decoration: none;
   width: 100%;
 }
-input[type="text"]:invalid,
-input[type="password"]:invalid,
-input[type="email"]:invalid,
+input[type=text]:invalid,
+input[type=password]:invalid,
+input[type=email]:invalid,
 select:invalid,
 textarea:invalid {
   box-shadow: none;
 }
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="email"]:focus,
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
 select:focus,
 textarea:focus {
   -moz-animation: focus 0.1s;
@@ -885,9 +786,9 @@ select::-ms-expand {
   display: none;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"],
+input[type=text],
+input[type=password],
+input[type=email],
 select {
   height: 2.75em;
 }
@@ -896,8 +797,8 @@ textarea {
   padding: 0.75em 1em;
 }
 
-input[type="checkbox"],
-input[type="radio"] {
+input[type=checkbox],
+input[type=radio] {
   -moz-appearance: none;
   -webkit-appearance: none;
   -ms-appearance: none;
@@ -909,8 +810,8 @@ input[type="radio"] {
   width: 1em;
   z-index: -1;
 }
-input[type="checkbox"] + label,
-input[type="radio"] + label {
+input[type=checkbox] + label,
+input[type=radio] + label {
   text-decoration: none;
   color: rgba(255, 255, 255, 0.75);
   cursor: pointer;
@@ -921,8 +822,8 @@ input[type="radio"] + label {
   padding-right: 0.75em;
   position: relative;
 }
-input[type="checkbox"] + label:before,
-input[type="radio"] + label:before {
+input[type=checkbox] + label:before,
+input[type=radio] + label:before {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   display: inline-block;
@@ -934,8 +835,8 @@ input[type="radio"] + label:before {
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
 }
-input[type="checkbox"] + label:before,
-input[type="radio"] + label:before {
+input[type=checkbox] + label:before,
+input[type=radio] + label:before {
   background: rgba(255, 255, 255, 0.125);
   border-radius: 6px;
   border: solid 2px rgba(255, 255, 255, 0.35);
@@ -950,24 +851,24 @@ input[type="radio"] + label:before {
   top: 0;
   width: 1.65em;
 }
-input[type="checkbox"]:checked + label:before,
-input[type="radio"]:checked + label:before {
+input[type=checkbox]:checked + label:before,
+input[type=radio]:checked + label:before {
   background: #1cb495;
   border-color: #1cb495;
   color: #ffffff;
   content: "\f00c";
 }
-input[type="checkbox"]:focus + label:before,
-input[type="radio"]:focus + label:before {
+input[type=checkbox]:focus + label:before,
+input[type=radio]:focus + label:before {
   border-color: #1cb495;
   box-shadow: 0 0 0 2px #1cb495;
 }
 
-input[type="checkbox"] + label:before {
+input[type=checkbox] + label:before {
   border-radius: 6px;
 }
 
-input[type="radio"] + label:before {
+input[type=radio] + label:before {
   border-radius: 100%;
 }
 
@@ -997,23 +898,19 @@ input[type="radio"] + label:before {
 }
 
 /* Button */
-input[type="submit"],
-input[type="reset"],
-input[type="button"],
+input[type=submit],
+input[type=reset],
+input[type=button],
 button,
 .button {
   -moz-appearance: none;
   -webkit-appearance: none;
   -ms-appearance: none;
   appearance: none;
-  -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out,
-    opacity 0.2s ease-in-out;
-  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out,
-    opacity 0.2s ease-in-out;
-  -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out,
-    opacity 0.2s ease-in-out;
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out,
-    opacity 0.2s ease-in-out;
+  -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, opacity 0.2s ease-in-out;
   background-color: #1cb495;
   border-radius: 6px;
   border: 0;
@@ -1028,26 +925,25 @@ button,
   text-decoration: none;
   white-space: nowrap;
 }
-input[type="submit"]:hover,
-input[type="reset"]:hover,
-input[type="button"]:hover,
+input[type=submit]:hover,
+input[type=reset]:hover,
+input[type=button]:hover,
 button:hover,
 .button:hover {
   background-color: #1fcaa7;
 }
-input[type="submit"]:active,
-input[type="reset"]:active,
-input[type="button"]:active,
+input[type=submit]:active,
+input[type=reset]:active,
+input[type=button]:active,
 button:active,
 .button:active {
   background-color: #199e83;
 }
-input[type="submit"].disabled,
-input[type="submit"]:disabled,
-input[type="reset"].disabled,
-input[type="reset"]:disabled,
-input[type="button"].disabled,
-input[type="button"]:disabled,
+input[type=submit].disabled, input[type=submit]:disabled,
+input[type=reset].disabled,
+input[type=reset]:disabled,
+input[type=button].disabled,
+input[type=button]:disabled,
 button.disabled,
 button:disabled,
 .button.disabled,
@@ -1055,9 +951,9 @@ button:disabled,
   opacity: 0.5;
 }
 @media screen and (max-width: 480px) {
-  input[type="submit"],
-  input[type="reset"],
-  input[type="button"],
+  input[type=submit],
+  input[type=reset],
+  input[type=button],
   button,
   .button {
     padding: 0;
@@ -1069,16 +965,13 @@ button:disabled,
   font-size: 3.25em;
   margin: 0 0 0.55em 0;
 }
-
 #header p {
   font-size: 1.35em;
   line-height: 1.65em;
 }
-
 #header a {
   color: inherit;
 }
-
 @media screen and (max-width: 736px) {
   #header h1 {
     font-size: 2em;
@@ -1087,53 +980,47 @@ button:disabled,
     font-size: 1em;
   }
 }
-
 @media screen and (max-width: 480px) {
   #header {
     margin: 0 0 1em 0;
   }
 }
 
-/* login Form */
-#login-form {
+/* Signup Form */
+#signup-form {
   display: -moz-flex;
   display: -webkit-flex;
   display: -ms-flex;
   display: flex;
   position: relative;
-} /*default characteristics of the login form class and children */
-
-#login-form input[type="text"],
-#login-form input[type="password"],
-#login-form input[type="email"] {
+}
+#signup-form input[type=text],
+#signup-form input[type=password],
+#signup-form input[type=email] {
   width: 18em;
-} /*Inputs given fixed length*/
-
-#login-form > * {
+}
+#signup-form > * {
   margin: 0 0 0 1em;
-} /*spacing between elements*/
-
-#login-form > :first-child {
+}
+#signup-form > :first-child {
   margin: 0 0 0 0;
-} /*Removes left margin from first child for alignment*/
-
+}
 @media screen and (max-width: 480px) {
-  /*Class characteristics for when screen width is smaller than 480px so mobile devices*/
-  #login-form {
+  #signup-form {
     -moz-flex-direction: column;
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
   }
-  #login-form input[type="text"], /*type orignally*/
-      #login-form input[type="password"],
-      #login-form input[type="email"] {
+  #signup-form input[type=type],
+  #signup-form input[type=password],
+  #signup-form input[type=email] {
     width: 100%;
   }
-  #login-form > * {
+  #signup-form > * {
     margin: 1.25em 0 0 0;
   }
-  #login-form .message {
+  #signup-form .message {
     bottom: -1.5em;
     font-size: 0.9em;
     height: 1em;
@@ -1210,15 +1097,4 @@ button:disabled,
     margin: 1em 0 0 0;
     position: relative;
   }
-}
-
-/* New code added not from template */
-.error-message {
-  display: none;
-  color: red;
-  font-size: 14px;
-}
-
-.input-error {
-  border: 1px solid red !important;
 }

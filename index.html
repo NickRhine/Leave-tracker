@@ -1,51 +1,90 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 
 <html>
-	<head>
-		<title>Rhine Leave Logger</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-	</head>
-	<body class="is-preload">
+  <head>
+    <title>Rhine Leave Logger</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="assets/css/main.css" />
+  </head>
+  <body class="is-preload">
+    <!-- Spans -->
+    <span id="error-message" class="error-message"></span>
 
-		<!-- Spans -->
-		<span id="error-message" class="error-message"></span>
+    <!-- Header -->
+    <header id="header">
+      <h1>Login</h1>
+      <p>Please login to your Rhine account.</p>
+    </header>
 
-		<!-- Header -->
-			<header id="header">
-				<h1>Login</h1>
-				<p> Please login to your Rhine account.</p>
-			</header>
+    <!-- Login Form -->
+    <form id="login-form" method="post" action="#">
+      <input type="email" name="email" id="email" placeholder="Email Address" />
+      <div style="position: relative; display: flex; align-items: center">
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          style="flex: 1"
+        />
+        <a
+          href="#"
+          style="position: absolute; top: 50px; padding: 0 10px; color: blue"
+        >
+          Forgot Password?</a
+        >
+      </div>
+      <input type="submit" value="Login" />
+    </form>
 
-		<!-- Login Form -->
-			<form id="login-form" method="post" action="#">
-				<input type="email" name="email" id="email" placeholder="Email Address" />
-				<input type="password" name="password" id="password" placeholder="Password"/>
-				<input type="submit" value="Login" />
-				
-			</form>
+    <header id="header">
+      <p>
+        If you have not been registered for this logger yet please contact a
+        site admin.
+      </p>
+    </header>
 
-			<header id="header">
- 				<p>If you have not registered your Rhine email with this logger yet please
-					 <a href="/html/register.html">register</a> first.</p>
-			</header>
+    <input
+      type="button"
+      value="Go to dashboard (admin)"
+      onclick="location.href='html/mainpage.html'"
+    />
 
-		<!-- Footer -->
-			<footer id="footer">
-				<ul class="icons">
-					<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-					<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-					<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-					<li><a href="#" class="icon fa-envelope"><span class="label">Email</span></a></li>
-				</ul>
-				<ul class="copyright">
-					<li>&copy; Untitled.</li><li>Credits: <a href="http://html5up.net">HTML5 UP</a></li>
-				</ul>
-			</footer>
+    <!-- Footer -->
+    <footer id="footer">
+      <ul class="icons">
+        <li>
+          <a href="#" class="icon brands fa-twitter"
+            ><span class="label">Twitter</span></a
+          >
+        </li>
+        <li>
+          <a href="#" class="icon brands fa-instagram"
+            ><span class="label">Instagram</span></a
+          >
+        </li>
+        <li>
+          <a href="#" class="icon brands fa-github"
+            ><span class="label">GitHub</span></a
+          >
+        </li>
+        <li>
+          <a href="#" class="icon fa-envelope"
+            ><span class="label">Email</span></a
+          >
+        </li>
+      </ul>
+      <ul class="copyright">
+        <li>&copy; Untitled.</li>
+        <li>Credits: <a href="http://html5up.net">HTML5 UP</a></li>
+      </ul>
+    </footer>
 
-		<!-- Scripts -->
-			<script src="assets/js/main.js"></script>
-
-	</body>
+    <!-- Scripts -->
+    <script src="assets/js/main.js" type="module"></script>
+  </body>
 </html>
