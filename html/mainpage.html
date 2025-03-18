@@ -13,28 +13,33 @@
 
   <body class="is-preload">
     <div>
-      <header>
-        <h1>Dashboard</h1>
-        <p>Welcome to the Rhine Leave Logger dashboard.</p>
+      <header class="header-wrapper">
+        <div class="header-content">
+          <h1>Dashboard</h1>
+          <p>Welcome to the Rhine Leave Logger dashboard.</p>
+
+          <div class="card-container">
+            <div class="card">
+              <h3>Total number of leave days remaining: 10</h3>
+            </div>
+
+            <div class="card">
+              <h3>Previous leave taken</h3>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <iframe
+            src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Africa%2FJohannesburg&showPrint=0&title=Leave%20schedule&src=ZW4uc2EjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%230B8043"
+            style="border: solid 1px #777"
+            width="500"
+            height="500"
+            frameborder="0"
+            scrolling="no"
+          ></iframe>
+        </div>
       </header>
-    </div>
-
-    <div id="calendar-container">
-      <iframe
-        src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Africa%2FJohannesburg&showPrint=0&title=Leave%20schedule&src=ZW4uc2EjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%230B8043"
-        style="border: solid 1px #777"
-        width="100%"
-        height="100%"
-        frameborder="0"
-        scrolling="no"
-      ></iframe>
-    </div>
-
-    <div class="box-container">
-      <div class="box1">
-        <h2>Total number of leave days remaining:</h2>
-        <h3>10</h3>
-      </div>
     </div>
 
     <input
@@ -42,6 +47,9 @@
       value="Apply for leave"
       onclick="location.href='index.html'"
     />
+
+    <!-- Footer -->
+    <footer id="footer"></footer>
     <!--Script-->
     <script src="../assets/js/mainpage.js" type="module"></script>
   </body>
