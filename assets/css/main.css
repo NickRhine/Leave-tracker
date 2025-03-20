@@ -206,6 +206,7 @@ body {
   -ms-justify-content: center;
   justify-content: center;
   background-color: #000;
+  justify-content: flex-start;
   padding: 6em 4em 4em 4em;
 }
 body.is-preload *,
@@ -1238,6 +1239,7 @@ button:disabled,
 }
 
 .card {
+  padding: 0 1.25em;
   box-shadow: 0 8px 16px 0 rgba(255, 255, 255, 0.5);
   transition: 0.3s;
   border-radius: 5px;
@@ -1248,4 +1250,32 @@ button:disabled,
 
 .card:hover {
   box-shadow: 0 16px 32px 0 rgba(255, 255, 255, 0.5);
+}
+
+.leave-history-list {
+  width: 80%; /* Full width of parent card */
+  height: 200px; /* Fixed height */
+  overflow-y: auto; /* Scroll when content overflows */
+  background-color: #f9f9f9; /* Light background */
+  border: 1px solid #ddd; /* Light gray border */
+  padding: 10px;
+  border-radius: 8px;
+  margin: auto;
+  color: black;
+}
+
+.leave-history-list ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.leave-history-list li {
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+.leave-history-list li:last-child {
+  padding: 8px;
+  border-bottom: none;
 }
