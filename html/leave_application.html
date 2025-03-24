@@ -11,7 +11,119 @@
     <link rel="stylesheet" href="../assets/css/main.css" />
   </head>
 
-  <body>
-    <script src="../assets/js/mainpage.js" type="module"></script>
+  <body class="is-preload">
+    <header class="header-wrapper-leave">
+      <h1>Leave Request Form</h1>
+    </header>
+
+    <main>
+      <form id="leave-form" method="post" action="#">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" placeholder="Name" required />
+
+        <label for="supervisor">Supervisor:</label>
+        <input
+          type="text"
+          name="supervisor"
+          id="supervisor"
+          placeholder="Supervisor name"
+          required
+        />
+
+        <label for="date">Date:</label>
+        <input type="date" name="date" id="date" placeholder="Date" required />
+
+        <h2 class="header-wrapper-leave">Reason For Leave</h2>
+
+        <fieldset>
+          <legend>Leave Type:</legend>
+
+          <input
+            type="checkbox"
+            name="leaveType"
+            value="sick-self"
+            id="sick-self"
+          />
+          <label for="sick-self"> Sick - Self </label>
+          <input
+            type="checkbox"
+            name="leaveType"
+            value="vacation"
+            id="vacation"
+          />
+          <label for="vacation">Vacation </label>
+          <input
+            type="checkbox"
+            name="leaveType"
+            value="leave-of-absence"
+            id="leave-of-absence"
+          />
+
+          <label for="leave-of-absence">Leave of absence</label>
+
+          <input
+            type="checkbox"
+            name="leaveType"
+            value="sick-fam"
+            id="sick-fam"
+          />
+          <label for="sick-fam">Sick - Family</label>
+
+          <input
+            type="checkbox"
+            name="leaveType"
+            value="funeral"
+            id="funeral"
+          />
+          <label for="funeral">Funeral</label>
+
+          <input type="checkbox" id="other" name="leaveType" value="other" />
+          <label for="other">Other </label>
+          <input
+            type="text"
+            name="other-reason"
+            id="other-reason"
+            placeholder="Specify other"
+            style="display: none"
+          />
+        </fieldset>
+
+        <h2 class="header-wrapper-leave">Leave Requested</h2>
+        <div class="from-to-dates">
+          <label for="start-date">From:</label>
+          <input
+            type="date"
+            name="start-date"
+            id="start-date"
+            placeholder="Start Date"
+          />
+          <label for="end-date">To:</label>
+
+          <input
+            type="date"
+            name="end-date"
+            id="end-date"
+            placeholder="End Date"
+          />
+        </div>
+        <label id="total-days">Total number of days requested: 0</label>
+
+        <label for="additional-notes">Additional notes:</label>
+        <textarea
+          name="additional notes"
+          id="additional-notes"
+          placeholder="Additional notes"
+        ></textarea>
+
+        <div class="leave-submit">
+          <input type="submit" value="Submit" />
+        </div>
+      </form>
+    </main>
+
+    <!-- Spans -->
+    <span></span>
+    <!-- Scripts -->
+    <script src="../assets/js/leave_application.js" type="module"></script>
   </body>
 </html>

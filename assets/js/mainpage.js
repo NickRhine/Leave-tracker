@@ -16,7 +16,7 @@ import { SlideShowBG } from "./exports.js";
 
   // Leave history list
   document.addEventListener("DOMContentLoaded", function () {
-    const leaveHistoryList = document.getElementById("leave-history");
+    const upcomingLeave = document.getElementById("upcoming-leave");
 
     // Example leave data (replace this with real data from storage/API)
     const leaveRecords = [
@@ -25,10 +25,10 @@ import { SlideShowBG } from "./exports.js";
       "2024-01-10 - 2024-01-12",
     ];
 
-    leaveRecords.forEach((leave) => {
-      let li = document.createElement("li");
-      li.textContent = leave;
-      leaveHistoryList.appendChild(li);
-    });
+    if (leaveRecords.length > 0) {
+      upcomingLeave.textContent = leaveRecords[0];
+    } else {
+      upcomingLeave.textContent = "No upcoming leave";
+    }
   });
 })();

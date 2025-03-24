@@ -20,14 +20,21 @@
 
           <div class="card-container">
             <div class="card">
-              <h3>Total number of leave days remaining: 10</h3>
+              <h3>
+                Annual leave remaining:
+                <span id="leave-balance">Loading...</span>
+              </h3>
             </div>
 
             <div class="card">
-              <h3>Previous leave taken:</h3>
-              <div class="leave-history-list">
-                <ul id="leave-history"></ul>
-              </div>
+              <h3>Upcoming leave:</h3>
+              <p id="upcoming-leave">No upcoming leave</p>
+
+              <input
+                type="button"
+                value="Show leave history"
+                onclick="location.href='leave_history.html'"
+              />
             </div>
           </div>
         </div>
