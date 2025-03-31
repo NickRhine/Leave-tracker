@@ -11,7 +11,7 @@ import { canUse } from "./exports.js";
       clientId: "cf1a04b4-d42a-4e18-9ec3-18ec43bfeaf9",
       authority:
         "https://login.microsoftonline.com/14e5adcf-4446-4cee-bac9-e293492fa769",
-      redirectUri: "http://127.0.0.1:5500/html/mainpage.html",
+      redirectUri: "http://localhost:5500/html/mainpage.html",
     },
     cache: {
       cacheLocation: "localStorage", // This configures where your cache will be stored
