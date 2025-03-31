@@ -6,6 +6,21 @@ import { canUse } from "./exports.js";
 
   var $body = document.querySelector("body"); //selects body tag from html
 
+  const msalConfig = {
+    auth: {
+      clientId: "cf1a04b4-d42a-4e18-9ec3-18ec43bfeaf9",
+      authority:
+        "https://login.microsoftonline.com/14e5adcf-4446-4cee-bac9-e293492fa769",
+      redirectUri: "http://127.0.0.1:5500/html/mainpage.html",
+    },
+    cache: {
+      cacheLocation: "localStorage", // This configures where your cache will be stored
+      storeAuthStateInCookie: true, // Set this to "true" if you want to store the auth state in a cookie
+    },
+  };
+
+  const msalInstance = new msal.PublicClientApplication(msalConfig);
+
   // Methods/polyfills. These make sure that the methods used are supported by older browsers
 
   // classList | (c) @remy | github.com/remy/polyfills | rem.mit-license.org
@@ -118,7 +133,6 @@ import { canUse } from "./exports.js";
     };
 
     // Events.
-    // Note: If you're *not* using AJAX, get rid of this event listener.
     $form.addEventListener("submit", function (event) {
       // event.stopPropagation();
       event.preventDefault();
@@ -148,30 +162,71 @@ import { canUse } from "./exports.js";
       // Disable submit.
       $submit.disabled = true;
 
+      // Microsoft login
+      const loginRequest = {
+        scopes: ["User.Read", "Mail.Read"], // Define the necessary Microsoft Graph API permissions
+      };
+
+      msalInstance
+        .loginPopup(loginRequest)
+        .then((response) => {
+          console.log("Login Successful", response);
+
+          const accessToken = response.accessToken;
+          getUserProfile(accessToken);
+
+          $message._show("success", "Login Successful!");
+        })
+        .catch((error) => {
+          console.error("Login failed", error);
+          $message._show("failure", "Login failed");
+          $submit.disabled = false;
+        });
       // Process form.
       // Note: Doesn't actually do anything yet (other than report back with a "thank you"),
       // but there's enough here to piece together a working AJAX submission call that does.
-      setTimeout(function () {
-        // Reset form.
-        $form.reset();
+      // setTimeout(function () {
+      //   // Reset form.
+      //   $form.reset();
 
-        // Enable submit.
-        $submit.disabled = false;
-        $message.classList.remove("failure");
+      //   // Enable submit.
+      //   $submit.disabled = false;
+      //   $message.classList.remove("failure");
 
-        // Show message.
-        $message._show = function (type, text) {
-          $message.innerHTML = text;
-          $message.classList.add(type);
-          $message.classList.add("visible");
+      //   // Show message.
+      //   $message._show = function (type, text) {
+      //     $message.innerHTML = text;
+      //     $message.classList.add(type);
+      //     $message.classList.add("visible");
 
-          setTimeout(function () {
-            $message._hide();
-          }, 3000);
-        };
-        $message._show("success", "Login Successful!");
-      }, 750);
+      //     setTimeout(function () {
+      //       $message._hide();
+      //     }, 3000);
+      //   };
+      //   $message._show("success", "Login Successful!");
+      // }, 750);
     });
+
+    function getUserProfile(token) {
+      fetch("https://graph.microsoft.com/v1.0/me", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("User Profile:", data);
+          // You can now use the user profile data as needed
+          // For example, you can display the user's name or email on the page
+          document.querySelector(
+            "#user-name"
+          ).textContent = `Welcome, ${data.displayName}`;
+        })
+        .catch((error) => {
+          console.error("Error fetching user profile:", error);
+        });
+    }
   })();
 })();
 
