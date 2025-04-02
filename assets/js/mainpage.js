@@ -29,30 +29,12 @@ import { SlideShowBG } from "./exports.js";
   // Slideshow Background.
   SlideShowBG(1);
 
-  // Leave history list
-  document.addEventListener("DOMContentLoaded", function () {
-    const upcomingLeave = document.getElementById("upcoming-leave");
-
-    // Example leave data (replace this with real data from storage/API)
-    const leaveRecords = [
-      "2024-03-01 - 2024-03-03",
-      "2024-02-15 - 2024-02-18",
-      "2024-01-10 - 2024-01-12",
-    ];
-
-    if (leaveRecords.length > 0) {
-      upcomingLeave.textContent = leaveRecords[0];
-    } else {
-      upcomingLeave.textContent = "No upcoming leave";
-    }
-  });
-
   // Call this function on page load
   document.addEventListener("DOMContentLoaded", updateLeaveInfo);
 })();
 
-async function getSiteId(accessToken) {
-  const url = `https://graph.microsoft.com/v1.0/sites/netorg7968809.sharepoint.com:/sites/RHINEmechatronics-BusinessDevelopment`;
+async function getExcelDataLeaveBalance(accessToken, siteId, fileId) {
+  const url = `https://graph.microsoft.com/v1.0/sites/${siteId}/drive/items/${fileId}/workbook/worksheets('Data')/usedRange`;
 
   const response = await fetch(url, {
     method: "GET",
@@ -63,45 +45,7 @@ async function getSiteId(accessToken) {
 
   const data = await response.json();
   if (response.ok) {
-    return data.id;
-  } else {
-    console.error("Error fetching Site ID:", data);
-    return null;
-  }
-}
-
-async function getFileId(accessToken, siteId) {
-  const url = `https://graph.microsoft.com/v1.0/sites/${siteId}/drive/root:/Rename.xlsx`;
-
-  const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  const data = await response.json();
-  if (response.ok) {
-    return data.id;
-  } else {
-    console.error("Error fetching File ID:", data);
-    return null;
-  }
-}
-
-async function getExcelData(accessToken, siteId, fileId) {
-  const url = `https://graph.microsoft.com/v1.0/sites/${siteId}/drive/items/${fileId}/workbook/worksheets('Data')/range(address='A1:A2')`;
-
-  const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  const data = await response.json();
-  if (response.ok) {
-    return data.values;
+    return data.values; //2D array with all of A and B columns
   } else {
     console.error("Error fetching Excel Data:", data);
     return null;
@@ -110,26 +54,64 @@ async function getExcelData(accessToken, siteId, fileId) {
 
 async function updateLeaveInfo() {
   const accessToken = sessionStorage.getItem("accessToken");
+  const userProfile = sessionStorage.getItem("userProfile");
+  const userData = JSON.parse(userProfile);
+  const userName = userData.displayName;
 
   if (!accessToken) {
     console.error("Access Token not found.");
     return;
   }
 
-  // const siteId = await getSiteId(accessToken);
-  // if (!siteId) return;
   const siteId =
     "netorg7968809.sharepoint.com,d6ef5094-875f-47d7-93c4-43ae171a04ff,883a8121-0374-49f4-9476-2d3b9a1cb38a";
 
   const fileId = "012LJMUY6BHXDWVGWPI5DIT3YPOFVODUTI";
-  // "b!lFDv1l-H10eTxEOuFxoE_yGBOoh0A_RJlHYtO5ocs4oWLWqGN5CiRLBtt1hFEdjV";
-  // if (!fileId) return;
 
-  const excelData = await getExcelData(accessToken, siteId, fileId);
+  const excelData = await getExcelDataLeaveBalance(accessToken, siteId, fileId);
   // const excelData = "012LJMUY6BHXDWVGWPI5DIT3YPOFVODUTI";
-  // if (!excelData) return;
+  if (!excelData) return;
 
-  // Assuming column A is "Leave Type" and column B is "Days Remaining"
-  document.querySelector("#leave-balance").textContent = excelData[0][0]; // Adjust index based on your Excel structure
-  document.querySelector("#upcoming-leave").textContent = excelData[1][0]; // Adjust index based on your Excel structure
+  let leaveBalance = "Not Found"; // Default value if not found
+  let upcomingLeave = "None";
+  let leaveDates = [];
+  let today = new Date(); // Get today's date
+
+  for (let i = 1; i < excelData.length; i++) {
+    if (excelData[i][0] === userName) {
+      leaveBalance = excelData[i][1];
+      break;
+    }
+  }
+
+  for (let i = 1; i < excelData.length; i++) {
+    if (excelData[i][4] === userName) {
+      // Column E (Index 4) - Employee Name
+      let startDateSerial = excelData[i][5]; // Column F (Index 5) - Start Date
+      let endDateSerial = excelData[i][6]; // Column G (Index 6) - End Date
+      if (!isNaN(startDateSerial) && !isNaN(endDateSerial)) {
+        let startDate = excelSerialDateToJSDate(parseInt(startDateSerial, 10));
+        let endDate = excelSerialDateToJSDate(parseInt(endDateSerial, 10));
+
+        if (endDate >= today) {
+          leaveDates.push({ start: startDate, end: endDate });
+        }
+      }
+    }
+  }
+
+  if (leaveDates.length > 0) {
+    // Sort leave dates by the latest start date
+    leaveDates.sort((a, b) => b.start - a.start);
+    let latestLeave = leaveDates[0]; // Latest upcoming leave
+    upcomingLeave = `${latestLeave.start.toDateString()} - ${latestLeave.end.toDateString()}`;
+  }
+
+  document.querySelector("#leave-balance").textContent = leaveBalance;
+  document.querySelector("#upcoming-leave").textContent = upcomingLeave;
+}
+
+function excelSerialDateToJSDate(serial) {
+  const excelEpoch = new Date(1899, 11, 30); // Excel's base date is 1899-12-30
+  return new Date(excelEpoch.getTime() + serial * 24 * 60 * 60 * 1000);
 }
