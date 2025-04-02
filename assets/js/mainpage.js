@@ -101,9 +101,9 @@ async function updateLeaveInfo() {
   }
 
   if (leaveDates.length > 0) {
-    // Sort leave dates by the latest start date
-    leaveDates.sort((a, b) => b.start - a.start);
-    let latestLeave = leaveDates[0]; // Latest upcoming leave
+    // Sort leave dates by the earliest start date
+    leaveDates.sort((a, b) => a.start - b.start);
+    let latestLeave = leaveDates[0]; // earliest upcoming leave
     upcomingLeave = `${latestLeave.start.toDateString()} - ${latestLeave.end.toDateString()}`;
   }
 
@@ -111,7 +111,8 @@ async function updateLeaveInfo() {
   document.querySelector("#upcoming-leave").textContent = upcomingLeave;
 }
 
+// Excel stores dates in serial format where 1 corresponds to 1899-11-30
 function excelSerialDateToJSDate(serial) {
-  const excelEpoch = new Date(1899, 11, 30); // Excel's base date is 1899-12-30
+  const excelEpoch = new Date(1899, 11, 30);
   return new Date(excelEpoch.getTime() + serial * 24 * 60 * 60 * 1000);
 }
