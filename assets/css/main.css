@@ -1186,7 +1186,7 @@ button:disabled,
 
 .leave-history-list {
   width: 80%; /* Full width of parent card */
-  height: 200px; /* Fixed height */
+  height: 200rem; /* Fixed height */
   overflow-y: auto; /* Scroll when content overflows */
   background-color: #f9f9f9; /* Light background */
   border: 1px solid #ddd; /* Light gray border */
@@ -1213,7 +1213,7 @@ button:disabled,
 
 .leave-history-link {
   display: inline-block;
-  margin-top: 10px;
+  margin-top: 10em;
   color: #007bff; /* Blue color */
   text-decoration: none;
   font-weight: bold;
@@ -1227,9 +1227,24 @@ button:disabled,
 #upcoming-leave {
   color: lightgrey;
 }
-/*MAINPAGE STYLES*/
 
-/* LEAVE APPLICATION STYLES */
+.leave-application-button {
+  margin-top: 2rem;
+}
+
+.logout-button {
+  height: min-content;
+  margin-top: 5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.no-scroll {
+  overflow: hidden !important;
+}
+/*MAINPAGE STYLES END*/
+
+/* LEAVE APPLICATION STYLES START */
 
 .header-wrapper-leave {
   display: flex;
@@ -1244,10 +1259,10 @@ input[type="radio"] {
   -ms-appearance: none;
   appearance: none;
   display: inline-block;
-  margin-right: 1em;
+  margin-right: 1rem;
   cursor: pointer;
   opacity: 0;
-  width: 1em;
+  width: 1rem;
   z-index: -1;
 }
 
@@ -1257,10 +1272,10 @@ input[type="radio"] + label {
   color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
   display: inline-block;
-  font-size: 1em;
+  font-size: 1rem;
   font-weight: 400;
-  padding-left: 2.4em;
-  padding-right: 0.75em;
+  padding-left: 2.4rem;
+  padding-right: 0.75rem;
   position: relative;
 }
 
@@ -1285,14 +1300,14 @@ input[type="radio"] + label:before {
   border: solid 2px rgba(255, 255, 255, 0.35);
   content: "";
   display: inline-block;
-  font-size: 0.8em;
-  height: 1.65em;
+  font-size: 0.8rem;
+  height: 1.65rem;
   left: 0;
-  line-height: 1.65em;
+  line-height: 1.65rem;
   position: absolute;
   text-align: center;
   top: 0;
-  width: 1.65em;
+  width: 1.65rem;
 }
 
 input[type="checkbox"]:checked + label:before,
@@ -1319,13 +1334,13 @@ input[type="radio"] + label:before {
 
 .from-to-dates {
   display: flex;
-  gap: 2em;
+  gap: 2rem;
   align-items: center;
-  padding-bottom: 1em;
+  padding-bottom: 1rem;
 }
 
 #additional-notes {
-  margin-bottom: 1em;
+  margin-bottom: 1rem;
 }
 
 .leave-submit {

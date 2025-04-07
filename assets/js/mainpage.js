@@ -29,6 +29,18 @@ import { SlideShowBG } from "./exports.js";
   // Slideshow Background.
   SlideShowBG(1);
 
+  // document.addEventListener("DOMContentLoaded", function () {
+  //   if (window.location.pathname.includes("mainpage.html")) {
+  //     document.body.classList.add("no-scroll");
+  //   }
+  // });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document
+      .querySelector(".logout-button input")
+      .addEventListener("click", logout);
+  });
+
   // Call this function on page load
   document.addEventListener("DOMContentLoaded", updateLeaveInfo);
 })();
@@ -115,4 +127,10 @@ async function updateLeaveInfo() {
 function excelSerialDateToJSDate(serial) {
   const excelEpoch = new Date(1899, 11, 30);
   return new Date(excelEpoch.getTime() + serial * 24 * 60 * 60 * 1000);
+}
+
+// Logout user and clear session storage
+function logout() {
+  sessionStorage.clear(); // Clears all session data
+  window.location.href = "../index.html"; // Redirect to the login page
 }

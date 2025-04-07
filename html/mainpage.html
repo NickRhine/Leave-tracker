@@ -9,6 +9,8 @@
       content="width=device-width, initial-scale=1, user-scalable=no"
     />
     <link rel="stylesheet" href="../assets/css/main.css" />
+    <!--Script-->
+    <script src="../assets/js/mainpage.js" type="module"></script>
   </head>
 
   <body class="is-preload">
@@ -21,7 +23,7 @@
           <div class="card-container">
             <div class="card">
               <h3>
-                Annual leave remaining:
+                Annual leave days remaining:
                 <span id="leave-balance">Loading...</span>
               </h3>
             </div>
@@ -53,14 +55,14 @@
     </div>
 
     <input
+      class="leave-application-button"
       type="button"
       value="Apply for leave"
       onclick="location.href='leave_application.html'"
     />
 
-    <!-- Footer -->
-    <footer id="footer"></footer>
-    <!--Script-->
-    <script src="../assets/js/mainpage.js" type="module"></script>
+    <div class="logout-button">
+      <input type="button" value="Logout" onclick="logout()" />
+    </div>
   </body>
 </html>
