@@ -81,7 +81,7 @@ async function updateLeaveInfo() {
   const fileId = "012LJMUY6BHXDWVGWPI5DIT3YPOFVODUTI";
 
   const excelData = await getExcelDataLeaveBalance(accessToken, siteId, fileId);
-  // const excelData = "012LJMUY6BHXDWVGWPI5DIT3YPOFVODUTI";
+
   if (!excelData) return;
 
   let leaveBalance = "Not Found"; // Default value if not found

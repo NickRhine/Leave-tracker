@@ -17,6 +17,12 @@
       "name": "Launch Edge against localhost",
       "url": "http://localhost:5500",
       "webRoot": "${workspaceFolder}"
+    },
+    {
+      "name": "Attach to .NET Functions",
+      "type": "coreclr",
+      "request": "attach",
+      "processId": "${command:azureFunctions.pickProcess}"
     }
   ]
 }
