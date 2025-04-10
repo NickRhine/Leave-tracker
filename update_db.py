@@ -27,7 +27,7 @@ def get_access_token():
 
 #Download the excel file from sharepoint to edit it
 def download_excel_file(access_token):
-    url = f"https://graph.microsoft.com/v1.0/sites/{SHAREPOINT_SITE_ID}/drives/items/{SHAREPOINT_FILE_ID}/workbook/worksheets('Data')/range(address='D8')" #usedRange
+    url = f"https://graph.microsoft.com/v1.0/sites/{SHAREPOINT_SITE_ID}/drives/items/{SHAREPOINT_FILE_ID}/workbook/worksheets('Data')/range(address='D19')" #usedRange
     headers = {"Authorization": f"Bearer {access_token}"}
 
     response = requests.get(url, headers=headers)
@@ -60,7 +60,7 @@ def upload_excel_file(df, access_token):
 
 def get_cell_value(access_token):
     # URL to access cell D8 in the 'Data' worksheet
-    url = f"https://graph.microsoft.com/v1.0/sites/{SHAREPOINT_SITE_ID}/drive/items/{SHAREPOINT_FILE_ID}/workbook/worksheets('Data')/range(address='D8')"
+    url = f"https://graph.microsoft.com/v1.0/sites/{SHAREPOINT_SITE_ID}/drive/items/{SHAREPOINT_FILE_ID}/workbook/worksheets('Data')/range(address='D19')"
     headers = {"Authorization": f"Bearer {access_token}"}
     
     response = requests.get(url, headers=headers)
@@ -71,7 +71,7 @@ def get_cell_value(access_token):
     return current_value
 
 def update_cell_value(new_value, access_token):
-    url = f"https://graph.microsoft.com/v1.0/sites/{SHAREPOINT_SITE_ID}/drive/items/{SHAREPOINT_FILE_ID}/workbook/worksheets('Data')/range(address='D8')"
+    url = f"https://graph.microsoft.com/v1.0/sites/{SHAREPOINT_SITE_ID}/drive/items/{SHAREPOINT_FILE_ID}/workbook/worksheets('Data')/range(address='D19')"
     headers = {
         "Authorization": f"Bearer {access_token}",
         "Content-Type": "application/json"
