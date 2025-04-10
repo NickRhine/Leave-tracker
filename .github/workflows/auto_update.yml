@@ -37,5 +37,5 @@ jobs:
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
           SHAREPOINT_SITE_ID: ${{ secrets.SHAREPOINT_SITE_ID }}
-          FILE_PATH: ${{ secrets.FILE_PATH }}
+          SHAREPOINT_FILE_ID: ${{ secrets.SHAREPOINT_FILE_ID }}
         run: python update_db.py
