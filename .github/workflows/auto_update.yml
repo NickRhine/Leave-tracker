@@ -2,7 +2,8 @@ name: Update SharePoint Excel
 
 on:
   schedule:
-    - cron: "0 0 1 * *" # Runs every 15 mins
+    #Crom syntax is mins, hours, day of month, month, day of week
+    - cron: "0 0 * * *" # Runs at midnight everyday
   workflow_dispatch: # Allows manual trigger
 
 jobs:
