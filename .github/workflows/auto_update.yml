@@ -1,0 +1,31 @@
+name: Update SharePoint Excel
+
+on:
+  schedule:
+    - cron: "*/15 * * * *" # Runs every 15 mins
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  update-excel:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: pip install requests pandas openpyxl
+
+      - name: Run update script
+        env:
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          SHAREPOINT_SITE_ID: ${{ secrets.SHAREPOINT_SITE_ID }}
+          FILE_PATH: ${{ secrets.FILE_PATH }}
+        run: python update_db.py
