@@ -10,12 +10,7 @@ CLIENT_SECRET = os.getenv("AZURE_CLIENT_SECRET")
 SHAREPOINT_FILE_ID = os.getenv("SHAREPOINT_FILE_ID")
 SHAREPOINT_SITE_ID = os.getenv("SHAREPOINT_SITE_ID")
 
-#Local testing not workflow
-# TENANT_ID = "14e5adcf-4446-4cee-bac9-e293492fa769"
-# CLIENT_ID = "d1476c68-95dc-4ded-8725-9a0e31e75df5"
-# CLIENT_SECRET = "mBL8Q~LNKQtRvLkjjHRFX4-kPXhnQooiMFdFrdwC"
-# SHAREPOINT_FILE_ID = "012LJMUY6BHXDWVGWPI5DIT3YPOFVODUTI"
-# SHAREPOINT_SITE_ID = "netorg7968809.sharepoint.com,d6ef5094-875f-47d7-93c4-43ae171a04ff,883a8121-0374-49f4-9476-2d3b9a1cb38a"
+
 
 #Excel sheet url grabs all data
 # url_b = f"https://graph.microsoft.com/v1.0/sites/{SHAREPOINT_SITE_ID}/drive/items/{SHAREPOINT_FILE_ID}/workbook/worksheets('Data')/range(address='B2:B10')"
