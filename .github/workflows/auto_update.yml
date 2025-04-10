@@ -21,6 +21,16 @@ jobs:
       - name: Install dependencies
         run: pip install requests pandas openpyxl
 
+      - name: Debug env variables
+        run: |
+          echo "AZURE_TENANT_ID: ${AZURE_TENANT_ID+YES }"
+          echo "AZURE_CLIENT_ID: ${AZURE_CLIENT_ID+YES }"
+          echo "AZURE_CLIENT_SECRET: ${AZURE_CLIENT_SECRET+YES }"
+        env:
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+
       - name: Run update script
         env:
           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
