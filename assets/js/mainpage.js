@@ -43,6 +43,8 @@ import { SlideShowBG } from "./exports.js";
 
   // Call this function on page load
   document.addEventListener("DOMContentLoaded", updateLeaveInfo);
+
+  updateNotificationBadge(true); // Shows badge
 })();
 
 async function getExcelDataLeaveBalance(accessToken, siteId, fileId) {
@@ -133,4 +135,9 @@ function excelSerialDateToJSDate(serial) {
 function logout() {
   sessionStorage.clear(); // Clears all session data
   window.location.href = "../index.html"; // Redirect to the login page
+}
+
+function updateNotificationBadge(hasNewNotifications) {
+  const badge = document.getElementById("notificationBadge");
+  badge.style.display = hasNewNotifications ? "inline" : "none";
 }

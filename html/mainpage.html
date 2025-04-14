@@ -14,6 +14,20 @@
   </head>
 
   <body class="is-preload">
+    <div class="logout-button">
+      <div class="email-icon-wrapper">
+        <a href="inbox.html">
+          <img
+            src="../images/email-icon2.png"
+            alt="Email Icon"
+            class="email-icon"
+          />
+          <span class="notification-badge" id="notificationBadge">!</span>
+        </a>
+      </div>
+
+      <input type="button" value="Logout" onclick="logout()" />
+    </div>
     <div>
       <header class="header-wrapper">
         <div class="header-content">
@@ -60,9 +74,5 @@
       value="Apply for leave"
       onclick="location.href='leave_application.html'"
     />
-
-    <div class="logout-button">
-      <input type="button" value="Logout" onclick="logout()" />
-    </div>
   </body>
 </html>

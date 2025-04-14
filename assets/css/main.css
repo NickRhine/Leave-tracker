@@ -207,7 +207,7 @@ body {
   justify-content: center;
   background-color: #000;
   justify-content: flex-start;
-  padding: 6em 4em 4em 4em;
+  padding: 1em 4em 4em 4em;
 }
 body.is-preload *,
 body.is-preload *:before,
@@ -227,17 +227,17 @@ body > * {
 }
 @media screen and (max-width: 1680px) {
   body {
-    padding: 6em 3.5em 3.5em 3.5em;
+    padding: 1em 3.5em 3.5em 3.5em;
   }
 }
 @media screen and (max-width: 736px) {
   body {
-    padding: 5em 2em 2em 2em;
+    padding: 1em 2em 2em 2em;
   }
 }
 @media screen and (max-width: 360px) {
   body {
-    padding: 5em 1.25em 1.25em 1.25em;
+    padding: 1em 1.25em 1.25em 1.25em;
   }
 }
 
@@ -426,12 +426,12 @@ a {
   -ms-transition: border-bottom-color 0.2s ease, color 0.2s ease;
   transition: border-bottom-color 0.2s ease, color 0.2s ease;
   border-bottom: dotted 1px rgba(255, 255, 255, 0.25);
-  color: #1cb495;
+  color: #179bd7;
   text-decoration: none;
 }
 a:hover {
   border-bottom-color: transparent;
-  color: #1cb495 !important;
+  color: #179bd7 !important;
   text-decoration: none;
 }
 
@@ -714,7 +714,7 @@ form .message.visible {
   opacity: 1;
 }
 form .message.success {
-  color: #1cb495;
+  color: #179bd7;
 }
 form .message.success:before {
   content: "\f00c";
@@ -867,7 +867,7 @@ textarea:focus {
   -ms-animation: focus 0.1s;
   animation: focus 0.1s;
   background-color: rgba(255, 255, 255, 0.125);
-  border-color: #1cb495;
+  border-color: #179bd7;
 }
 
 select {
@@ -944,7 +944,7 @@ button,
     opacity 0.2s ease-in-out;
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out,
     opacity 0.2s ease-in-out;
-  background-color: #1cb495;
+  background-color: #179bd7; /*#179bd7*/
   border-radius: 6px;
   border: 0;
   color: #ffffff !important;
@@ -1175,7 +1175,7 @@ button:disabled,
   box-shadow: 0 8px 16px 0 rgba(255, 255, 255, 0.5);
   transition: 0.3s;
   border-radius: 5px;
-  background-color: #199e83;
+  background-color: #066a99;
   width: 300px;
   height: auto;
 }
@@ -1233,10 +1233,38 @@ button:disabled,
 }
 
 .logout-button {
-  height: min-content;
-  margin-top: 5rem;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.email-icon-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+}
+
+.email-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(40%, -40%);
+  background-color: red;
+  color: white;
+  border-radius: 999px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.7rem;
+  line-height: 1;
+  min-width: 1rem;
+  display: none;
 }
 
 .no-scroll {
@@ -1312,16 +1340,16 @@ input[type="radio"] + label:before {
 
 input[type="checkbox"]:checked + label:before,
 input[type="radio"]:checked + label:before {
-  background: #1cb495;
-  border-color: #1cb495;
+  background: #179bd7;
+  border-color: #179bd7;
   color: #ffffff;
   content: "\f00c";
 }
 
 input[type="checkbox"]:focus + label:before,
 input[type="radio"]:focus + label:before {
-  border-color: #1cb495;
-  box-shadow: 0 0 0 2px #1cb495;
+  border-color: #179bd7;
+  box-shadow: 0 0 0 2px #179bd7;
 }
 
 input[type="checkbox"] + label:before {
