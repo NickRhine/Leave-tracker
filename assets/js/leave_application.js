@@ -62,4 +62,40 @@ import { SlideShowBG } from "./exports.js";
 // Save form data and open email to send formatted document
 async function submitForm(event) {
   event.preventDefault(); // Prevent from submission and page reload
+
+  // Get form values
+  const name = document.getElementById("name").value;
+  const supervisor = document.getElementById("supervisor").value;
+  const date = document.getElementById("date").value;
+  const startDate = document.getElementById("start-date").value;
+  const endDate = document.getElementById("end-date").value;
+  const notes = document.getElementById("additional-notes").value;
+
+  const leaveTypes = Array.from(
+    document.querySelectorAll('input[name="leaveType"]:checked')
+  ).map((box) => box.value);
+
+  const otherReason = document.getElementById("other-reason").value;
+  if (leaveTypes.includes("other") && otherReason) {
+    leaveTypes.push(`Other: ${otherReason}`);
+  }
+}
+
+async function getExcelDataApplications(accessToken, siteId, fileId) {
+  const url = `https://graph.microsoft.com/v1.0/sites/${siteId}/drive/items/${fileId}/workbook/worksheets('Data')/range('')`;
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  const data = await response.json();
+  if (response.ok) {
+    return data.values; //2D array with all of A and B columns
+  } else {
+    console.error("Error fetching Excel Data:", data);
+    return null;
+  }
 }

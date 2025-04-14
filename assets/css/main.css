@@ -963,7 +963,7 @@ input[type="reset"]:hover,
 input[type="button"]:hover,
 button:hover,
 .button:hover {
-  background-color: #1fcaa7;
+  background-color: #65c4f0; /*#1fcaa7*/
 }
 input[type="submit"]:active,
 input[type="reset"]:active,
