@@ -101,8 +101,8 @@ async function updateLeaveInfo() {
   for (let i = 1; i < excelData.length; i++) {
     if (excelData[i][4] === userName) {
       // Column E (Index 4) - Employee Name
-      let startDateSerial = excelData[i][5]; // Column F (Index 5) - Start Date
-      let endDateSerial = excelData[i][6]; // Column G (Index 6) - End Date
+      let startDateSerial = excelData[i][9]; // Column F (Index 5) - Start Date
+      let endDateSerial = excelData[i][10]; // Column G (Index 6) - End Date
       if (!isNaN(startDateSerial) && !isNaN(endDateSerial)) {
         let startDate = excelSerialDateToJSDate(parseInt(startDateSerial, 10));
         let endDate = excelSerialDateToJSDate(parseInt(endDateSerial, 10));

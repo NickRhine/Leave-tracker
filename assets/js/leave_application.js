@@ -54,12 +54,12 @@ import { SlideShowBG } from "./exports.js";
 
   document.addEventListener("DOMContentLoaded", () => {
     document
-      .querySelector("leave-submit input")
-      .addEventListener("click", submitForm());
+      .querySelector(".leave-submit input")
+      .addEventListener("click", submitForm);
   });
 })();
 
-// Save form data and open email to send formatted document
+// Save form data to excel sheet and send email notification
 async function submitForm(event) {
   event.preventDefault(); // Prevent from submission and page reload
 
@@ -79,10 +79,58 @@ async function submitForm(event) {
   if (leaveTypes.includes("other") && otherReason) {
     leaveTypes.push(`Other: ${otherReason}`);
   }
+
+  const accessToken = sessionStorage.getItem("accessToken");
+  const userProfile = sessionStorage.getItem("userProfile");
+  const email = sessionStorage.getItem("email");
+  const userData = JSON.parse(userProfile);
+  const userName = userData.displayName;
+  const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
+
+  //Collect excel data
+  const siteId =
+    "netorg7968809.sharepoint.com,d6ef5094-875f-47d7-93c4-43ae171a04ff,883a8121-0374-49f4-9476-2d3b9a1cb38a";
+  const fileId = "012LJMUY6BHXDWVGWPI5DIT3YPOFVODUTI";
+  let data = await getExcelDataApplications(accessToken, siteId, fileId);
+
+  if (data == null) {
+    console.error("Error fetching Excel data");
+    return;
+  }
+
+  //Find empty row
+  let emptyRow = null;
+  for (let i = 1; i < data.length; i++) {
+    //Check employee name column
+    if (data[i][0] === "") {
+      emptyRow = i;
+      break;
+    }
+  }
+  if (emptyRow === null) {
+    //If no rows are empty, append to the end of the data
+    emptyRow = data.length;
+  }
+  const rowData = [
+    name,
+    supervisor,
+    date,
+    leaveTypes[0] || "",
+    leaveTypes[1] || "",
+    startDate,
+    endDate,
+    null, //total days calculated in excel
+    notes,
+    "Pending", // Approval status column
+  ];
+  updateExcelRow(accessToken, siteId, fileId, emptyRow, rowData);
+
+  //Send email notification
+  sendEmailNotification(name, supervisor, date, accessToken, email);
 }
 
 async function getExcelDataApplications(accessToken, siteId, fileId) {
-  const url = `https://graph.microsoft.com/v1.0/sites/${siteId}/drive/items/${fileId}/workbook/worksheets('Data')/range('')`;
+  const url = `https://graph.microsoft.com/v1.0/sites/${siteId}/drive/items/${fileId}/workbook/worksheets('Data')/range(address='E1:N100')`;
 
   const response = await fetch(url, {
     method: "GET",
@@ -93,9 +141,99 @@ async function getExcelDataApplications(accessToken, siteId, fileId) {
 
   const data = await response.json();
   if (response.ok) {
-    return data.values; //2D array with all of A and B columns
+    return data.values;
   } else {
     console.error("Error fetching Excel Data:", data);
     return null;
+  }
+}
+
+async function sendEmailNotification(
+  name,
+  supervisor,
+  date,
+  accessToken,
+  email
+) {
+  const adminEmail = "nicholas.hobden@rhinemechatronics.com";
+  const subject = `Leave Application from ${name}`;
+  const body = `
+    <html>
+      <body>
+        <p>Good day ${supervisor},</p>
+        <p>Kindly review my submitted leave application submitted on ${date}.</p>
+        <p>Please log in to the leave application portal to view the details:</p>
+        <p><a href="http://localhost:5500/index.html" target="_blank">Click here to view the leave application</a></p>
+        <p>Thank you,</p>
+        <p>${name}</p>
+      </body>
+    </html>
+  `;
+
+  // Email payload
+  const emailPayload = {
+    message: {
+      subject: subject,
+      body: {
+        contentType: "HTML",
+        content: body,
+      },
+      toRecipients: [
+        {
+          emailAddress: {
+            address: adminEmail,
+          },
+        },
+      ],
+    },
+  };
+
+  // Send the email request to Microsoft Graph API
+  try {
+    const response = await fetch(
+      `https://graph.microsoft.com/v1.0/users/${email}/sendMail`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(emailPayload),
+      }
+    );
+
+    if (response.ok) {
+      console.log("Email sent successfully!");
+    } else {
+      const error = await response.json();
+      console.error("Error sending email:", error);
+    }
+  } catch (error) {
+    console.error("Error in sending email via Graph API:", error);
+  }
+}
+
+async function updateExcelRow(accessToken, siteId, fileId, rowNumber, rowData) {
+  const range = `E${rowNumber + 1}:N${rowNumber + 1}`; // Excel uses 1-based indexing
+  const url = `https://graph.microsoft.com/v1.0/sites/${siteId}/drive/items/${fileId}/workbook/worksheets('Data')/range(address='${range}')`;
+
+  const payload = {
+    values: [rowData],
+  };
+
+  const response = await fetch(url, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (response.ok) {
+    console.log(`Row ${rowNumber + 1} updated successfully`);
+  } else {
+    const error = await response.json();
+    console.error(`Error updating row ${rowNumber + 1}:`, error);
   }
 }
