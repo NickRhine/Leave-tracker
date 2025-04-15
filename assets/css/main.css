@@ -970,7 +970,7 @@ input[type="reset"]:active,
 input[type="button"]:active,
 button:active,
 .button:active {
-  background-color: #199e83;
+  background-color: #4da3ca; /* #199e83*/
 }
 input[type="submit"].disabled,
 input[type="submit"]:disabled,

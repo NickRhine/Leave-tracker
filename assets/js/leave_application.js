@@ -15,10 +15,19 @@ import { SlideShowBG } from "./exports.js";
   SlideShowBG(1);
 
   //Make the other textbox appear and disappear
-  document.getElementById("other").addEventListener("change", function () {
-    document.getElementById("other-reason").style.display = this.checked
-      ? "block"
-      : "none";
+  // document.getElementById("other").addEventListener("change", function () {
+  //   document.getElementById("other-reason").style.display = this.checked
+  //     ? "block"
+  //     : "none";
+  // });
+
+  document.querySelectorAll('input[name="leaveType"]').forEach((radio) => {
+    radio.addEventListener("change", function () {
+      const otherReason = document.getElementById("other").checked;
+      document.getElementById("other-reason").style.display = otherReason
+        ? "block"
+        : "none";
+    });
   });
 
   // Calculate the number of working days leave requested
@@ -61,6 +70,30 @@ import { SlideShowBG } from "./exports.js";
 
 // Save form data to excel sheet and send email notification
 async function submitForm(event) {
+  // #region Submission message declaration
+  const $form = document.getElementById("leave-form");
+  let $message = $form.querySelector(".message");
+  if (!$message) {
+    $message = document.createElement("span");
+    $message.classList.add("message");
+    $form.appendChild($message);
+  }
+
+  $message._show = function (type, text) {
+    $message.innerHTML = text;
+    $message.classList.add(type);
+    $message.classList.add("visible");
+
+    setTimeout(function () {
+      $message._hide();
+    }, 5000);
+  };
+
+  $message._hide = function () {
+    $message.classList.remove("visible");
+  };
+  // #endregion
+
   event.preventDefault(); // Prevent from submission and page reload
 
   // Get form values
@@ -80,12 +113,22 @@ async function submitForm(event) {
     leaveTypes.push(`Other: ${otherReason}`);
   }
 
+  // Check if all required fields are filled
+  let valid = validateInputs(
+    name,
+    supervisor,
+    date,
+    startDate,
+    endDate,
+    leaveTypes
+  );
+  if (!valid) {
+    $message._show("failure", "Submission failed");
+    return;
+  }
+
   const accessToken = sessionStorage.getItem("accessToken");
-  const userProfile = sessionStorage.getItem("userProfile");
   const email = sessionStorage.getItem("email");
-  const userData = JSON.parse(userProfile);
-  const userName = userData.displayName;
-  const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
 
   //Collect excel data
   const siteId =
@@ -127,6 +170,37 @@ async function submitForm(event) {
 
   //Send email notification
   sendEmailNotification(name, supervisor, date, accessToken, email);
+
+  //If successful
+  $message._show("success", "Submission Successful!");
+}
+
+function validateInputs(
+  name,
+  supervisor,
+  date,
+  startDate,
+  endDate,
+  leaveTypes
+) {
+  if (
+    !name ||
+    !supervisor ||
+    !date ||
+    !startDate ||
+    !endDate ||
+    leaveTypes.length === 0
+  ) {
+    alert("Please fill in all required fields.");
+    return false;
+  }
+
+  if (leaveTypes.includes("other") && !otherReason.trim()) {
+    alert("Please specify the 'Other' reason for leave.");
+    return false;
+  }
+
+  return true;
 }
 
 async function getExcelDataApplications(accessToken, siteId, fileId) {
