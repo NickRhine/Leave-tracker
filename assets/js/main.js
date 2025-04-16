@@ -120,29 +120,7 @@ import { canUse } from "./exports.js";
         .then((tokenResponse) => {
           const accessToken = tokenResponse.accessToken;
 
-          return fetch("https://graph.microsoft.com/v1.0/me", {
-            method: "GET",
-            headers: {
-              Authorization: "Bearer " + accessToken,
-            },
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              sessionStorage.setItem("userProfile", JSON.stringify(data));
-              sessionStorage.setItem("accessToken", accessToken);
-              sessionStorage.setItem("email", data.mail);
-
-              return msalInstance.acquireTokenSilent({
-                scopes: ["Sites.Read.All", "Files.Read.All"],
-              });
-            })
-            .then((tokenResponse) => {
-              sessionStorage.setItem(
-                "sharepointToken",
-                tokenResponse.accessToken
-              );
-              window.location.href = "http://localhost:5500/html/mainpage.html";
-            });
+          return fetch_access(null, msalInstance, accessToken);
         })
         .catch((error) => {
           console.warn("Silent auto-login failed:", error);
@@ -212,29 +190,7 @@ import { canUse } from "./exports.js";
           .then((tokenResponse) => {
             const accessToken = tokenResponse.accessToken;
 
-            return fetch("https://graph.microsoft.com/v1.0/me", {
-              method: "GET",
-              headers: { Authorization: "Bearer " + accessToken },
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                sessionStorage.setItem("userProfile", JSON.stringify(data));
-                sessionStorage.setItem("accessToken", accessToken);
-                sessionStorage.setItem("email", data.mail);
-
-                return msalInstance.acquireTokenSilent({
-                  scopes: ["Sites.Read.All", "Files.Read.All"],
-                });
-              })
-              .then((sharepointToken) => {
-                sessionStorage.setItem(
-                  "sharepointToken",
-                  sharepointToken.accessToken
-                );
-                $message._show("success", "Welcome Back!");
-                window.location.href =
-                  "http://localhost:5500/html/mainpage.html";
-              });
+            return fetch_access($message, msalInstance, accessToken);
           })
           .catch((error) => {
             console.error("Silent token acquisition failed", error);
@@ -259,29 +215,7 @@ import { canUse } from "./exports.js";
             const accessToken = response.accessToken;
             msalInstance.setActiveAccount(response.account);
 
-            return fetch("https://graph.microsoft.com/v1.0/me", {
-              method: "GET",
-              headers: { Authorization: "Bearer " + accessToken },
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                sessionStorage.setItem("userProfile", JSON.stringify(data));
-                sessionStorage.setItem("accessToken", accessToken);
-                sessionStorage.setItem("email", data.mail);
-
-                return msalInstance.acquireTokenSilent({
-                  scopes: ["Sites.Read.All", "Files.Read.All"],
-                });
-              })
-              .then((tokenResponse) => {
-                sessionStorage.setItem(
-                  "sharepointToken",
-                  tokenResponse.accessToken
-                );
-                $message._show("success", "Login Successful!");
-                window.location.href =
-                  "http://localhost:5500/html/mainpage.html";
-              });
+            return fetch_access($message, msalInstance, accessToken);
           })
           .catch((error) => {
             console.error("Login failed", error);
@@ -294,3 +228,29 @@ import { canUse } from "./exports.js";
     $form.addEventListener("submit", handleLoginSubmit);
   })();
 })();
+
+// Function to fetch user profile and access token
+function fetch_access($message, msalInstance, accessToken) {
+  fetch("https://graph.microsoft.com/v1.0/me", {
+    method: "GET",
+    headers: { Authorization: "Bearer " + accessToken },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      sessionStorage.setItem("userProfile", JSON.stringify(data));
+      sessionStorage.setItem("accessToken", accessToken);
+      sessionStorage.setItem("email", data.mail);
+
+      return msalInstance.acquireTokenSilent({
+        scopes: ["Sites.Read.All", "Files.Read.All"],
+      });
+    })
+    .then((tokenResponse) => {
+      sessionStorage.setItem("sharepointToken", tokenResponse.accessToken);
+      if ($message != null) {
+        $message._show("success", "Login Successful!");
+      }
+
+      window.location.href = "http://localhost:5500/html/mainpage.html";
+    });
+}
