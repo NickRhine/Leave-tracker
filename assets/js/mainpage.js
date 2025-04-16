@@ -134,6 +134,7 @@ function excelSerialDateToJSDate(serial) {
 // Logout user and clear session storage
 function logout() {
   sessionStorage.clear(); // Clears all session data
+  localStorage.clear(); // Clears all local storage data
   window.location.href = "../index.html"; // Redirect to the login page
 }
 

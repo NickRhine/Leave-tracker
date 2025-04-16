@@ -1153,6 +1153,13 @@ button:disabled,
 .input-error {
   border: 1px solid red !important;
 }
+
+.login-components {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
 /* LOGIN PAGE STYLES */
 
 /*MAINPAGE STYLES*/

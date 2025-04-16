@@ -16,40 +16,28 @@
 
     <!-- Header -->
     <header id="header">
-      <h1>Login</h1>
+      <h1>Leave Tracker Login</h1>
       <p>Please login to your Rhine account.</p>
     </header>
 
     <!-- Login Form -->
     <form id="login-form" method="post" action="#">
-      <!-- <input type="email" name="email" id="email" placeholder="Email Address" />
-      <div style="position: relative; display: flex; align-items: center">
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Password"
-          style="flex: 1"
-        />
-        <a
-          href="#"
-          style="position: absolute; top: 3em; padding: 0 10px; color: blue"
-        >
-          Forgot Password?</a
-        >
-      </div> -->
-      <input type="submit" value="Login" />
+      <div class="login-components">
+        <input type="submit" value="Login" />
+        <input type="checkbox" id="remember-me" name="remember-me" />
+        <label for="remember-me"> Remember me </label>
+      </div>
     </form>
 
     <header id="header">
       <p>If your Rhine account does not work, please contact a site admin.</p>
     </header>
 
-    <input
+    <!-- <input
       type="button"
       value="Go to dashboard (admin)"
       onclick="location.href='html/mainpage.html'"
-    />
+    /> -->
 
     <!-- Footer -->
     <footer id="footer">
