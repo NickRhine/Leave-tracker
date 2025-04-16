@@ -84,6 +84,7 @@ import { canUse } from "./exports.js";
     }, 100);
   });
 
+  //Start slideshow background
   SlideShowBG(0);
 
   // Auto-login if "Remember Me" was previously selected
