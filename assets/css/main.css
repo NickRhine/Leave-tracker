@@ -1382,3 +1382,19 @@ input[type="radio"] + label:before {
   display: flex;
   justify-content: end;
 }
+
+/* inbox styles start */
+.request-item {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px 0;
+  cursor: pointer;
+  background-color: #33353d;
+  transition: background-color 0.3s ease;
+}
+
+.request-item:hover {
+  background-color: rgb(86, 86, 100);
+}
+/* inbox styles end */

@@ -56,7 +56,7 @@ function loadInbox(excelData, requestList) {
     let comments = excelData[i][12]; //Col M
     let approvalStatus = excelData[i][13]; //Col N
 
-    if (!name || !startDate) continue;
+    if (!name || !startDate) continue; //Skip empty rows
 
     requests.push({
       i,
@@ -76,11 +76,27 @@ function loadInbox(excelData, requestList) {
   requests.forEach((req) => {
     const item = document.createElement("div");
     item.className = "request-item";
+
     item.innerHTML = `
     <strong>${req.name}</strong><br/>
     ${req.startDate.toDateString()} to ${req.endDate.toDateString()}<br/>
     Status: <em>${req.approvalStatus}</em><br/>
     `;
+
+    item.addEventListener("click", () => {
+      alert(
+        `Leave Application for ${req.name}:\n\n` +
+          `Supervisor: ${req.supervisor}\n` +
+          `Requested: ${req.date.toDateString()}\n` +
+          `Reason: ${req.reason} (${req.other || "N/A"})\n` +
+          `Start: ${req.startDate.toDateString()}\n` +
+          `End: ${req.endDate.toDateString()}\n` +
+          `Total Days: ${req.totalDays}\n` +
+          `Comments: ${req.comments || "None"}\n` +
+          `Status: ${req.approvalStatus}`
+      );
+    });
+
     requestList.appendChild(item);
   });
 }

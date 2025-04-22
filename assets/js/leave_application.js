@@ -110,7 +110,7 @@ async function submitForm(event) {
 
   const otherReason = document.getElementById("other-reason").value;
   if (leaveTypes.includes("other") && otherReason) {
-    leaveTypes.push(`Other: ${otherReason}`);
+    leaveTypes.push(`${otherReason}`);
   }
 
   // Check if all required fields are filled
@@ -120,7 +120,8 @@ async function submitForm(event) {
     date,
     startDate,
     endDate,
-    leaveTypes
+    leaveTypes,
+    otherReason
   );
   if (!valid) {
     $message._show("failure", "Submission failed");
@@ -181,7 +182,8 @@ function validateInputs(
   date,
   startDate,
   endDate,
-  leaveTypes
+  leaveTypes,
+  otherReason
 ) {
   if (
     !name ||
