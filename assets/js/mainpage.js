@@ -90,6 +90,7 @@ async function updateLeaveInfo() {
   let upcomingLeave = "None";
   let leaveDates = [];
   let today = new Date(); // Get today's date
+  let indexNum = 0; // Index for the approval status row
 
   for (let i = 1; i < excelData.length; i++) {
     if (excelData[i][0] === userName) {
@@ -101,14 +102,18 @@ async function updateLeaveInfo() {
   for (let i = 1; i < excelData.length; i++) {
     if (excelData[i][4] === userName) {
       // Column E (Index 4) - Employee Name
-      let startDateSerial = excelData[i][9]; // Column F (Index 5) - Start Date
-      let endDateSerial = excelData[i][10]; // Column G (Index 6) - End Date
+      let startDateSerial = excelData[i][9]; // Column I (Index 9) - Start Date
+      let endDateSerial = excelData[i][10]; // Column J (Index 10) - End Date
       if (!isNaN(startDateSerial) && !isNaN(endDateSerial)) {
         let startDate = excelSerialDateToJSDate(parseInt(startDateSerial, 10));
         let endDate = excelSerialDateToJSDate(parseInt(endDateSerial, 10));
-
+        let approvalStatus = excelData[i][13]; // Column N (Index 13) - Approval Status
         if (endDate >= today) {
-          leaveDates.push({ start: startDate, end: endDate });
+          leaveDates.push({
+            start: startDate,
+            end: endDate,
+            status: approvalStatus,
+          });
         }
       }
     }
@@ -120,7 +125,9 @@ async function updateLeaveInfo() {
     let latestLeave = leaveDates[0]; // earliest upcoming leave
     upcomingLeave = `${latestLeave.start.toDateString()} - ${latestLeave.end.toDateString()}`;
   }
-
+  document.querySelector(
+    "#app-status"
+  ).textContent = `Approval Staus: ${leaveDates[0].status}`;
   document.querySelector("#leave-balance").textContent = leaveBalance;
   document.querySelector("#upcoming-leave").textContent = upcomingLeave;
 }
