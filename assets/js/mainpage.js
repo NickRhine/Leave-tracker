@@ -1,4 +1,8 @@
-import { SlideShowBG } from "./exports.js";
+import {
+  SlideShowBG,
+  getExcelData,
+  excelSerialDateToJSDate,
+} from "./exports.js";
 
 (function () {
   "use strict"; //strict js to jelp reduce accidental errors like undeclared variables
@@ -47,25 +51,6 @@ import { SlideShowBG } from "./exports.js";
   updateNotificationBadge(true); // Shows badge
 })();
 
-async function getExcelDataLeaveBalance(accessToken, siteId, fileId) {
-  const url = `https://graph.microsoft.com/v1.0/sites/${siteId}/drive/items/${fileId}/workbook/worksheets('Data')/usedRange`;
-
-  const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  const data = await response.json();
-  if (response.ok) {
-    return data.values; //2D array with all of A and B columns
-  } else {
-    console.error("Error fetching Excel Data:", data);
-    return null;
-  }
-}
-
 async function updateLeaveInfo() {
   const accessToken = sessionStorage.getItem("accessToken");
   const userProfile = sessionStorage.getItem("userProfile");
@@ -82,7 +67,8 @@ async function updateLeaveInfo() {
 
   const fileId = "012LJMUY6BHXDWVGWPI5DIT3YPOFVODUTI";
 
-  const excelData = await getExcelDataLeaveBalance(accessToken, siteId, fileId);
+  // const excelData = await getExcelDataLeaveBalance(accessToken, siteId, fileId);
+  const excelData = await getExcelData(accessToken, siteId, fileId);
 
   if (!excelData) return;
 
@@ -90,7 +76,6 @@ async function updateLeaveInfo() {
   let upcomingLeave = "None";
   let leaveDates = [];
   let today = new Date(); // Get today's date
-  let indexNum = 0; // Index for the approval status row
 
   for (let i = 1; i < excelData.length; i++) {
     if (excelData[i][0] === userName) {
@@ -130,12 +115,6 @@ async function updateLeaveInfo() {
   ).textContent = `Approval Staus: ${leaveDates[0].status}`;
   document.querySelector("#leave-balance").textContent = leaveBalance;
   document.querySelector("#upcoming-leave").textContent = upcomingLeave;
-}
-
-// Excel stores dates in serial format where 1 corresponds to 1899-11-30
-function excelSerialDateToJSDate(serial) {
-  const excelEpoch = new Date(1899, 11, 30);
-  return new Date(excelEpoch.getTime() + serial * 24 * 60 * 60 * 1000);
 }
 
 // Logout user and clear session storage

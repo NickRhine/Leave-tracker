@@ -88,3 +88,28 @@ export function canUse(p) {
     "ms" + up in e
   );
 }
+
+export async function getExcelData(accessToken, siteId, fileId) {
+  const url = `https://graph.microsoft.com/v1.0/sites/${siteId}/drive/items/${fileId}/workbook/worksheets('Data')/usedRange`;
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  const data = await response.json();
+  if (response.ok) {
+    return data.values;
+  } else {
+    console.error("Error fetching Excel Data:", data);
+    return null;
+  }
+}
+
+// Excel stores dates in serial format where 1 corresponds to 1899-11-30
+export function excelSerialDateToJSDate(serial) {
+  const excelEpoch = new Date(1899, 11, 30);
+  return new Date(excelEpoch.getTime() + serial * 24 * 60 * 60 * 1000);
+}
