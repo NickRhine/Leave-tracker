@@ -2,7 +2,14 @@ import {
   getExcelData,
   SlideShowBG,
   excelSerialDateToJSDate,
+  updateExcelRow,
 } from "./exports.js";
+
+const accessToken = sessionStorage.getItem("accessToken");
+const siteId =
+  "netorg7968809.sharepoint.com,d6ef5094-875f-47d7-93c4-43ae171a04ff,883a8121-0374-49f4-9476-2d3b9a1cb38a";
+
+const fileId = "012LJMUY6BHXDWVGWPI5DIT3YPOFVODUTI";
 
 (function () {
   ("use strict"); //strict js to help reduce accidental errors like undeclared variables
@@ -19,11 +26,6 @@ import {
   SlideShowBG(1);
 
   document.addEventListener("DOMContentLoaded", async () => {
-    const accessToken = sessionStorage.getItem("accessToken");
-    const siteId =
-      "netorg7968809.sharepoint.com,d6ef5094-875f-47d7-93c4-43ae171a04ff,883a8121-0374-49f4-9476-2d3b9a1cb38a";
-
-    const fileId = "012LJMUY6BHXDWVGWPI5DIT3YPOFVODUTI";
     try {
       const excelData = await getExcelData(accessToken, siteId, fileId);
       const requestList = document.getElementById("request-list");
@@ -41,6 +43,7 @@ import {
   });
 })();
 
+// Takes excel data and populates the inbox with requests when item in inbox is clicked it expands to show more details
 function loadInbox(excelData, requestList) {
   const requests = [];
 
@@ -104,6 +107,30 @@ function loadInbox(excelData, requestList) {
     item.addEventListener("click", () => {
       const isVisible = details.style.display === "block";
       details.style.display = isVisible ? "none" : "block";
+    });
+
+    const rowData = [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+    ];
+    details.querySelector(".approve-btn").addEventListener("click", () => {
+      rowData[9] = "Approved";
+      // Call the function to update the Excel sheet with the new status and comments
+      updateExcelRow(accessToken, siteId, fileId, req.i, rowData);
+    });
+
+    details.querySelector(".deny-btn").addEventListener("click", () => {
+      rowData[9] = "Denied";
+      // Call the function to update the Excel sheet with the new status and comments
+      updateExcelRow(accessToken, siteId, fileId, req.i, rowData);
     });
 
     requestList.appendChild(item);

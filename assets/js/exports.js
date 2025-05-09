@@ -89,6 +89,7 @@ export function canUse(p) {
   );
 }
 
+// Gets all the excel data
 export async function getExcelData(accessToken, siteId, fileId) {
   const url = `https://graph.microsoft.com/v1.0/sites/${siteId}/drive/items/${fileId}/workbook/worksheets('Data')/usedRange`;
 
@@ -112,4 +113,49 @@ export async function getExcelData(accessToken, siteId, fileId) {
 export function excelSerialDateToJSDate(serial) {
   const excelEpoch = new Date(1899, 11, 30);
   return new Date(excelEpoch.getTime() + serial * 24 * 60 * 60 * 1000);
+}
+
+export async function updateExcelRow(
+  accessToken,
+  siteId,
+  fileId,
+  rowNumber,
+  rowData // This needs to be an array of 10 values, put 'none' if you do not want to update a value
+) {
+  // leave data ranges from col E to N (5 to 14 in 0-based index)
+  const colRange = ["E", "F", "G", "H", "I", "J", "K", "L", "M", "N"];
+  const updatePromises = [];
+
+  for (let i = 0; i < rowData.length; i++) {
+    const value = rowData[i];
+    if (value !== null && value !== undefined) {
+      const columns = colRange[i];
+      const range = `${columns}${rowNumber + 1}`; // Excel uses 1-based indexing
+      const url = `https://graph.microsoft.com/v1.0/sites/${siteId}/drive/items/${fileId}/workbook/worksheets('Data')/range(address='${range}')`;
+
+      const payload = {
+        values: [[value]],
+      };
+
+      updatePromises.push(
+        fetch(url, {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }).then(async (response) => {
+          if (response.ok) {
+            console.log(`Row ${rowNumber + 1} updated successfully`);
+          } else {
+            const error = await response.json();
+            console.error(`Error updating row ${rowNumber + 1}:`, error);
+          }
+        })
+      );
+    }
+  }
+
+  await Promise.all(updatePromises);
 }

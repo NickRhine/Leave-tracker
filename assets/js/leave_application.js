@@ -1,4 +1,4 @@
-import { SlideShowBG } from "./exports.js";
+import { SlideShowBG, updateExcelRow, getExcelData } from "./exports.js";
 
 (function () {
   "use strict"; //strict js to jelp reduce accidental errors like undeclared variables
@@ -135,7 +135,7 @@ async function submitForm(event) {
   const siteId =
     "netorg7968809.sharepoint.com,d6ef5094-875f-47d7-93c4-43ae171a04ff,883a8121-0374-49f4-9476-2d3b9a1cb38a";
   const fileId = "012LJMUY6BHXDWVGWPI5DIT3YPOFVODUTI";
-  let data = await getExcelDataApplications(accessToken, siteId, fileId);
+  let data = await getExcelData(accessToken, siteId, fileId);
 
   if (data == null) {
     console.error("Error fetching Excel data");
@@ -174,6 +174,8 @@ async function submitForm(event) {
 
   //If successful
   $message._show("success", "Submission Successful!");
+  await new Promise((resolve) => setTimeout(resolve, 2000)); // Wait for 2 seconds
+  window.location.href = "../html/mainpage.html"; // Redirect to main page
 }
 
 function validateInputs(
@@ -203,25 +205,6 @@ function validateInputs(
   }
 
   return true;
-}
-
-async function getExcelDataApplications(accessToken, siteId, fileId) {
-  const url = `https://graph.microsoft.com/v1.0/sites/${siteId}/drive/items/${fileId}/workbook/worksheets('Data')/range(address='E1:N100')`;
-
-  const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  const data = await response.json();
-  if (response.ok) {
-    return data.values;
-  } else {
-    console.error("Error fetching Excel Data:", data);
-    return null;
-  }
 }
 
 async function sendEmailNotification(
@@ -286,30 +269,5 @@ async function sendEmailNotification(
     }
   } catch (error) {
     console.error("Error in sending email via Graph API:", error);
-  }
-}
-
-async function updateExcelRow(accessToken, siteId, fileId, rowNumber, rowData) {
-  const range = `E${rowNumber + 1}:N${rowNumber + 1}`; // Excel uses 1-based indexing
-  const url = `https://graph.microsoft.com/v1.0/sites/${siteId}/drive/items/${fileId}/workbook/worksheets('Data')/range(address='${range}')`;
-
-  const payload = {
-    values: [rowData],
-  };
-
-  const response = await fetch(url, {
-    method: "PATCH",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
-
-  if (response.ok) {
-    console.log(`Row ${rowNumber + 1} updated successfully`);
-  } else {
-    const error = await response.json();
-    console.error(`Error updating row ${rowNumber + 1}:`, error);
   }
 }
