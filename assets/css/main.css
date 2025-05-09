@@ -1397,4 +1397,10 @@ input[type="radio"] + label:before {
 .request-item:hover {
   background-color: rgb(86, 86, 100);
 }
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
 /* inbox styles end */

@@ -83,18 +83,27 @@ function loadInbox(excelData, requestList) {
     Status: <em>${req.approvalStatus}</em><br/>
     `;
 
+    const details = document.createElement("div");
+    details.className = "request-details";
+    details.style.display = "none";
+
+    details.innerHTML = `
+    <p><strong>Supervisor:</strong> ${req.supervisor}</p>
+  <p><strong>Requested on:</strong> ${req.date.toDateString()}</p>
+  <p><strong>Reason:</strong> ${req.reason}</p>
+  <p><strong>If other:</strong> ${req.other}</p>
+  <p><strong>Total Days:</strong> ${req.totalDays}</p>
+  <p><strong>Comments:</strong> ${req.comments || "None"}</p>
+  <div class="actions">
+    <button class="approve-btn">Approve</button>
+    <button class="deny-btn">Deny</button>
+  </div>
+  `;
+
+    item.appendChild(details);
     item.addEventListener("click", () => {
-      alert(
-        `Leave Application for ${req.name}:\n\n` +
-          `Supervisor: ${req.supervisor}\n` +
-          `Requested: ${req.date.toDateString()}\n` +
-          `Reason: ${req.reason} (${req.other || "N/A"})\n` +
-          `Start: ${req.startDate.toDateString()}\n` +
-          `End: ${req.endDate.toDateString()}\n` +
-          `Total Days: ${req.totalDays}\n` +
-          `Comments: ${req.comments || "None"}\n` +
-          `Status: ${req.approvalStatus}`
-      );
+      const isVisible = details.style.display === "block";
+      details.style.display = isVisible ? "none" : "block";
     });
 
     requestList.appendChild(item);
