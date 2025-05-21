@@ -109,10 +109,12 @@ async function updateLeaveInfo() {
     leaveDates.sort((a, b) => a.start - b.start);
     let latestLeave = leaveDates[0]; // earliest upcoming leave
     upcomingLeave = `${latestLeave.start.toDateString()} - ${latestLeave.end.toDateString()}`;
+  } else {
+    leaveDates.status = "No upcoming leave";
   }
   document.querySelector(
     "#app-status"
-  ).textContent = `Approval Staus: ${leaveDates[0].status}`;
+  ).textContent = `Approval Status: ${leaveDates.status}`;
   document.querySelector("#leave-balance").textContent = leaveBalance;
   document.querySelector("#upcoming-leave").textContent = upcomingLeave;
 }

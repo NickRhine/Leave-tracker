@@ -59,7 +59,7 @@ function loadInbox(excelData, requestList) {
     let comments = excelData[i][12]; //Col M
     let approvalStatus = excelData[i][13]; //Col N
 
-    if (!name || !startDate) continue; //Skip empty rows
+    if (!name || !startDate || startDate < new Date()) continue; //Skip empty rows and dates which have passed
 
     requests.push({
       i,
@@ -74,6 +74,13 @@ function loadInbox(excelData, requestList) {
       comments,
       approvalStatus,
     });
+  }
+  if (requests.length === 0) {
+    const noRequests = document.createElement("div");
+    noRequests.className = "no-requests";
+    noRequests.innerHTML = "<p>No requests at the moment.</p>";
+    requestList.appendChild(noRequests);
+    return;
   }
 
   requests.forEach((req) => {
