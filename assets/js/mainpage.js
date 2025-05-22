@@ -47,8 +47,6 @@ import {
 
   // Call this function on page load
   document.addEventListener("DOMContentLoaded", updateLeaveInfo);
-
-  updateNotificationBadge(true); // Shows badge
 })();
 
 async function updateLeaveInfo() {
@@ -68,12 +66,13 @@ async function updateLeaveInfo() {
   const fileId = "012LJMUY6BHXDWVGWPI5DIT3YPOFVODUTI";
 
   // const excelData = await getExcelDataLeaveBalance(accessToken, siteId, fileId);
-  const excelData = await getExcelData(accessToken, siteId, fileId);
+  const excelData = await getExcelData(accessToken, siteId, fileId, "Data");
 
   if (!excelData) return;
 
   let leaveBalance = "Not Found"; // Default value if not found
   let upcomingLeave = "None";
+  let approvalStatus = "N/A"; //If not found
   let leaveDates = [];
   let today = new Date(); // Get today's date
 
@@ -92,7 +91,7 @@ async function updateLeaveInfo() {
       if (!isNaN(startDateSerial) && !isNaN(endDateSerial)) {
         let startDate = excelSerialDateToJSDate(parseInt(startDateSerial, 10));
         let endDate = excelSerialDateToJSDate(parseInt(endDateSerial, 10));
-        let approvalStatus = excelData[i][13]; // Column N (Index 13) - Approval Status
+        approvalStatus = excelData[i][13]; // Column N (Index 13) - Approval Status
         if (endDate >= today) {
           leaveDates.push({
             start: startDate,
@@ -109,14 +108,20 @@ async function updateLeaveInfo() {
     leaveDates.sort((a, b) => a.start - b.start);
     let latestLeave = leaveDates[0]; // earliest upcoming leave
     upcomingLeave = `${latestLeave.start.toDateString()} - ${latestLeave.end.toDateString()}`;
-  } else {
-    leaveDates.status = "No upcoming leave";
+    approvalStatus = latestLeave.status; // Update approval status to the latest leave
   }
   document.querySelector(
     "#app-status"
-  ).textContent = `Approval Status: ${leaveDates.status}`;
+  ).textContent = `Approval Status: ${approvalStatus}`;
   document.querySelector("#leave-balance").textContent = leaveBalance;
   document.querySelector("#upcoming-leave").textContent = upcomingLeave;
+
+  for (let i = 0; i < leaveDates.length; i++) {
+    if (leaveDates[i].status === "Pending") {
+      updateNotificationBadge(true); // Shows badge
+      break; // Exit loop after showing badge
+    }
+  }
 }
 
 // Logout user and clear session storage

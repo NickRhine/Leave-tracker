@@ -1,4 +1,4 @@
-import { SlideShowBG } from "./exports.js";
+import { getExcelData, SlideShowBG } from "./exports.js";
 import { canUse } from "./exports.js";
 
 (function () {
@@ -246,12 +246,30 @@ function fetch_access($message, msalInstance, accessToken) {
         scopes: ["Sites.Read.All", "Files.Read.All"],
       });
     })
-    .then((tokenResponse) => {
+    .then(async (tokenResponse) => {
       sessionStorage.setItem("sharepointToken", tokenResponse.accessToken);
       if ($message != null) {
         $message._show("success", "Login Successful!");
       }
 
+      const siteId =
+        "netorg7968809.sharepoint.com,d6ef5094-875f-47d7-93c4-43ae171a04ff,883a8121-0374-49f4-9476-2d3b9a1cb38a";
+
+      const fileId = "012LJMUY6BHXDWVGWPI5DIT3YPOFVODUTI";
+      const excelData = await getExcelData(
+        accessToken,
+        siteId,
+        fileId,
+        "Admins"
+      );
+      for (let i = 1; i < excelData.length; i++) {
+        if (tokenResponse.account.name === excelData[i][0]) {
+          window.location.href =
+            "http://localhost:5500/html/leave_application.html";
+          break;
+        } else {
+        }
+      }
       window.location.href = "http://localhost:5500/html/mainpage.html";
     });
 }

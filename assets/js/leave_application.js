@@ -135,7 +135,7 @@ async function submitForm(event) {
   const siteId =
     "netorg7968809.sharepoint.com,d6ef5094-875f-47d7-93c4-43ae171a04ff,883a8121-0374-49f4-9476-2d3b9a1cb38a";
   const fileId = "012LJMUY6BHXDWVGWPI5DIT3YPOFVODUTI";
-  let data = await getExcelData(accessToken, siteId, fileId);
+  let data = await getExcelData(accessToken, siteId, fileId, "Data");
 
   if (data == null) {
     console.error("Error fetching Excel data");

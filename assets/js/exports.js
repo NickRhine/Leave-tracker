@@ -90,8 +90,8 @@ export function canUse(p) {
 }
 
 // Gets all the excel data
-export async function getExcelData(accessToken, siteId, fileId) {
-  const url = `https://graph.microsoft.com/v1.0/sites/${siteId}/drive/items/${fileId}/workbook/worksheets('Data')/usedRange`;
+export async function getExcelData(accessToken, siteId, fileId, sheetName) {
+  const url = `https://graph.microsoft.com/v1.0/sites/${siteId}/drive/items/${fileId}/workbook/worksheets('${sheetName}')/usedRange`;
 
   const response = await fetch(url, {
     method: "GET",

@@ -27,7 +27,7 @@ const fileId = "012LJMUY6BHXDWVGWPI5DIT3YPOFVODUTI";
 
   document.addEventListener("DOMContentLoaded", async () => {
     try {
-      const excelData = await getExcelData(accessToken, siteId, fileId);
+      const excelData = await getExcelData(accessToken, siteId, fileId, "Data");
       const requestList = document.getElementById("request-list");
 
       if (excelData && requestList) {
