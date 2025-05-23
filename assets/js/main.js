@@ -1,5 +1,4 @@
 import { getExcelData, SlideShowBG } from "./exports.js";
-import { canUse } from "./exports.js";
 
 (function () {
   "use strict"; //strict js to jelp reduce accidental errors like undeclared variables
